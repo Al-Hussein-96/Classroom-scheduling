@@ -16,6 +16,13 @@ public class Teacher {
     private SubjectName nameSubject;
     private int MaximumLecture;
     private List<Period> periods;
+
+    public Teacher(int ID, SubjectName nameSubject) {
+        this.ID = ID;
+        this.nameSubject = nameSubject;
+    }
+    
+    
     
     
     
