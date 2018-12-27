@@ -7,11 +7,13 @@ package Model;
 
 /**
  *
- * @author Al-Hussein
+ * @author Moaz
  */
-public class Section {
-    private int ID;
-    
-
-    
+public enum TeacherName {
+    //  نظري
+    Mohamad_alahmad , Basel_alkhateb,
+    Nawras_alwatfa , Maysa_abo_kasem,
+    Waseem_ahmad,
+    //  عملي
+    Ammar_nahas;
 }

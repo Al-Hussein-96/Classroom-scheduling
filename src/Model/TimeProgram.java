@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,29 @@ public class TimeProgram {
     private int ID;
     private List<Lecture> lectures;
     
+    
+    
+    
+    private List<Teacher> AllTeachers;
+    private List<Subject> AllSubjects = new ArrayList<>();
+    public TimeProgram() {
+        
+    }
+    
+    
+    public List<TimeProgram> getAllMoves(){
+        TimeProgram t = new TimeProgram();
+        return null;
+    }
+    
+    
+    /**
+     * TODO
+     * method getAllMoves
+     * list of teacher
+     * list of constrain
+     * كتابة بولياني لكل قيد
+     */
     
     
     

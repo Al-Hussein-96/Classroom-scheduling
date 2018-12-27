@@ -12,15 +12,21 @@ import java.util.List;
  * @author Al-Hussein
  */
 public class Teacher {
-    private int ID;
-    private SubjectName nameSubject;
+    private TeacherName Name;
+    private List<SubjectName> subjectNames;
     private int MaximumLecture;
-    private List<Period> periods;
+    private int MaximumDay;
+    private List<Period> periods; /// the time that teather cannot found in university
 
-    public Teacher(int ID, SubjectName nameSubject) {
-        this.ID = ID;
-        this.nameSubject = nameSubject;
+    public Teacher(TeacherName Name, List<SubjectName> subjectNames, int MaximumLecture, int MaximumDay, List<Period> periods) {
+        this.Name = Name;
+        this.subjectNames = subjectNames;
+        this.MaximumLecture = MaximumLecture;
+        this.MaximumDay = MaximumDay;
+        this.periods = periods;
     }
+
+
     
     
     

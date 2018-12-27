@@ -10,10 +10,28 @@ package Model;
  * @author Al-Hussein
  */
 public enum SubjectName {
-    SOFTWARE_THEOR, SOFTWARE_PRAC, 
-    OPERATING_SYSTEM_THEOR, OPERATING_SYSTEM_PRAC,
-    NN_THEOR,NN_PRAC,
-    ECONOMIE_THEOR,ECONOMIE_PRAC,
-    COMPILER_THEOR,COMPILER_PRAC,
-    ALGO_THEOR,ALGO_PRAC;
+    /**
+     * AI  ==> Artificial Intelligence
+     * SE  ==> Software Engineering
+     * N   ==> Networks
+     * */
+    SOFTWARE_AI_N, 
+    SOFTWARE_SE,
+    ALGO_SE_N,
+    ALGO_AI,
+    OPERATING_SYSTEM,
+    NN_AI,
+    ECONOMIE,
+    COMPILER_AI,
+    COMPILER_SE,
+    AppNetworks_N,
+    DATABASE_SE;
+    
+    
+//    SOFTWARE_THEOR, SOFTWARE_PRAC, 
+//    OPERATING_SYSTEM_THEOR, OPERATING_SYSTEM_PRAC,
+//    NN_THEOR,NN_PRAC,
+//    ECONOMIE_THEOR,ECONOMIE_PRAC,
+//    COMPILER_THEOR,COMPILER_PRAC,
+//    ALGO_THEOR,ALGO_PRAC;
 }

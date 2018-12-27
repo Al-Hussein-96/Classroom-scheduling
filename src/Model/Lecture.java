@@ -15,18 +15,18 @@ import java.util.List;
 public class Lecture {
 
     private int ID;
+    private Subject subject;
     private Teacher teacher;
-    private Section section;
-    private Hall hall;
     private Period period;
+    private Hall hall;
 
     public final static List<Lecture> All_Lectures;
 
     static {
-        All_Lectures = getnerateAllLecture();
+        All_Lectures = generateAllLecture();
     }
 
-    private static List<Lecture> getnerateAllLecture() {
+    private static List<Lecture> generateAllLecture() {
         List<Lecture> lectures = new ArrayList<>();
         // 6 Number Of Subject
         for(int sub_id=1;sub_id<=6;sub_id++)

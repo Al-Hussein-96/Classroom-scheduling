@@ -12,9 +12,13 @@ import java.util.Date;
  * @author Al-Hussein
  */
 public class Period {
-    private int ID;
     private int Day;
-    private Date Start;
-    private Date End;
+    private int time;
+
+    public Period(int Day, int time) {
+        this.Day = Day;
+        this.time = time;
+    }
+    
     
 }
