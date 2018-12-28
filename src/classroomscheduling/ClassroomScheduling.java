@@ -44,7 +44,9 @@ public class ClassroomScheduling extends Application {
         BFS algorithm = new BFS(new TimeProgram());
         
 
-       // algorithm.Solve().printProgram();
+        TimeProgram t = algorithm.Solve();
+        if(t!=null)t.printProgram();
+        else System.out.println("Error");
 
     }
 

@@ -14,6 +14,14 @@ public class Period implements Cloneable {
     private int Day;
     private int time;
 
+    public Period() {
+    }
+
+    public Period(Period p){
+        this.Day = p.Day;
+        this.time = p.time;
+    }
+    
     public Period(int Day, int time) {
         this.Day = Day;
         this.time = time;
@@ -68,16 +76,16 @@ public class Period implements Cloneable {
     public String toString() {
         String startEnd;
         switch (time) {
-            case 0:
+            case 1:
                 startEnd = "8:30 to 10:30";
                 break;
-            case 1:
+            case 2:
                 startEnd = "10:30 to 12:30";
                 break;
-            case 2:
+            case 3:
                 startEnd = "12:30 to 2:30";
                 break;
-            case 3:
+            case 4:
                 startEnd = "2:30 to 4:30";
                 break;
             default:
@@ -87,19 +95,19 @@ public class Period implements Cloneable {
 
         String nameDay;
         switch (Day) {
-            case 0:
+            case 1:
                 nameDay = "Sunday";
                 break;
-            case 1:
+            case 2:
                 nameDay = "Monday";
                 break;
-            case 2:
+            case 3:
                 nameDay = "Tuesday";
                 break;
-            case 3:
+            case 4:
                 nameDay = "Wednesday";
                 break;
-            case 4:
+            case 5:
                 nameDay = "Thursday";
                 break;
             default:

@@ -20,6 +20,15 @@ public class Hall implements Cloneable {
         this.ID = ID;
         this.type = type;
     }
+    public Hall(Hall h) {
+        this.ID = new String(h.ID);
+        this.type = h.type;
+    }
+
+    @Override
+    public String toString() {
+        return  "ID=" + ID + ", type=" + type ;
+    }
 
     public enum Type {
         THEATER, LAB;

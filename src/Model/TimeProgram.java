@@ -5,6 +5,8 @@
  */
 package Model;
 
+import static Model.University.Specializations;
+import static Model.University.subjects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,27 +20,28 @@ import java.util.logging.Logger;
 public class TimeProgram implements Cloneable {
 
     private int ID;
-    private List<Lecture> lectures;
+    private List<Lecture> lectures = new ArrayList<>();
 
     public TimeProgram() {
 
     }
 
+    public TimeProgram(TimeProgram TP) {
+        for (Lecture L : TP.lectures) {
+            this.lectures.add(new Lecture(L));
+        }
+    }
+
     public List<TimeProgram> getAllProgrm() {
         List<TimeProgram> list = new ArrayList<>();
-
         for (Lecture lecture : Lecture.All_Lectures) {
             TimeProgram newTimeProgram;
-            try {
-                newTimeProgram = (TimeProgram) this.clone();
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(TimeProgram.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            }
-            newTimeProgram.addLecture(lecture);
+            newTimeProgram = new TimeProgram(this);
+            newTimeProgram.addLecture(new Lecture(lecture));
             if (newTimeProgram.checkSubRestrictionforSubProgram()) {
                 list.add(newTimeProgram);
             }
+
         }
         return list;
     }
@@ -53,7 +56,8 @@ public class TimeProgram implements Cloneable {
      * @return true if all restriction is true
      */
     public boolean checkSubRestrictionforSubProgram() {
-        return fourthRestriction() && fifthRestriction() && sixthRestriction() && seventhRestriction();
+        boolean res = fourthRestriction() && fifthRestriction() && sixthRestriction() && seventhRestriction();
+        return res;
     }
 
     /**
@@ -70,7 +74,7 @@ public class TimeProgram implements Cloneable {
      * @return true if all restriction is true
      */
     public boolean checkAllrestriction() {
-        return fifthRestriction() && secondRestriction()
+        return firstRestriction() && secondRestriction()
                 && thirdRestriction() && fourthRestriction()
                 && fifthRestriction() && sixthRestriction()
                 && seventhRestriction();
@@ -85,8 +89,102 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean firstRestriction() {
+        int x = 0;
+        for (Subject s : subjects) {
+            if (s.isAI()) {
+                int numG = Specializations.get(0).getNumGroup();
+                int numC = Specializations.get(0).getNumCategory();
 
+                int numLec = s.getNumTheoretical();
+                int numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Theoretical, 0, 0);
+                if (numLec != numcontint) {
+                    return false;
+                }
+                x += numLec;
+                numLec = s.getNumPractical_THEATER();
+                for (int i = 1; i <= numG; i++) {
+                    numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Practical_THEATER, i, 0);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+                numLec = s.getNumPractical_LAB();
+                for (int i = 1; i <= numC; i++) {
+                    numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Practical_LAB, 0, i);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+            }
+            if (s.isN()) {
+                int numG = Specializations.get(1).getNumGroup();
+                int numC = Specializations.get(1).getNumCategory();
+
+                int numLec = s.getNumPractical_THEATER();
+                for (int i = 1; i <= numG; i++) {
+                    int numcontint = listContint(s.getName(), SpecializationName.Networks, TypeLecture.Practical_THEATER, i, 0);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+                numLec = s.getNumPractical_LAB();
+                for (int i = 1; i <= numC; i++) {
+                    int numcontint = listContint(s.getName(), SpecializationName.Networks, TypeLecture.Practical_LAB, 0, i);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+            }
+            if (s.isSE()) {
+                int numG = Specializations.get(2).getNumGroup();
+                int numC = Specializations.get(2).getNumCategory();
+
+                int numLec = s.getNumPractical_THEATER();
+                for (int i = 1; i <= numG; i++) {
+                    int numcontint = listContint(s.getName(), SpecializationName.Software_Engineering, TypeLecture.Practical_THEATER, i, 0);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+                numLec = s.getNumPractical_LAB();
+                for (int i = 1; i <= numC; i++) {
+                    int numcontint = listContint(s.getName(), SpecializationName.Software_Engineering, TypeLecture.Practical_LAB, 0, i);
+                    if (numLec != numcontint) {
+                        return false;
+                    }
+                    x += numLec;
+                }
+            }
+        }
+        if (lectures.size() != x) {
+            return false;
+        }
         return true;
+    }
+
+    /**
+     * to get number of lecture with SubjectName subject and SpecializationName
+     * specializationName and TypeLecture typeLecture
+     *
+     * @param subject
+     * @param specializationName
+     * @param typeLecture
+     * @return
+     */
+    private int listContint(SubjectName subject, SpecializationName specializationName, TypeLecture typeLecture, int GroupNum, int CatNum) {
+        int res = 0;
+        for (Lecture L : lectures) {
+            if (L.getSubject().equals(subject) && L.getSpecializationName().equals(specializationName) && L.getTypeLecture().equals(typeLecture)
+                    && L.getGroupNumber() == GroupNum && L.getCategoryNumber() == CatNum) {
+                res++;
+            }
+        }
+        return res;
     }
 
     /**
@@ -99,7 +197,6 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean secondRestriction() {
-
         return true;
     }
 
@@ -126,7 +223,19 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean fourthRestriction() {
-
+        for (int i = 0; i < lectures.size(); i++) {
+            for (int j = 0; j < lectures.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+                Lecture L1 = lectures.get(i);
+                Lecture L2 = lectures.get(j);
+                if (L1.getTeacher().getName().equals(L2.getTeacher().getName())
+                        && L1.getPeriod().equals(L2.getPeriod())) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -139,7 +248,22 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean fifthRestriction() {
-
+        for (int i = 0; i < lectures.size(); i++) {
+            for (int j = 0; j < lectures.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+                Lecture L1 = lectures.get(i);
+                Lecture L2 = lectures.get(j);
+                if (L1.getSpecializationName().equals(L2.getSpecializationName())
+                        && L1.getTypeLecture().equals(L2.getTypeLecture())
+                        && L1.getGroupNumber() == L2.getGroupNumber()
+                        && L1.getCategoryNumber() == L2.getCategoryNumber()
+                        && L1.getPeriod().equals(L2.getPeriod())) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -152,7 +276,19 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean sixthRestriction() {
-
+        for (int i = 0; i < lectures.size(); i++) {
+            for (int j = 0; j < lectures.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+                Lecture L1 = lectures.get(i);
+                Lecture L2 = lectures.get(j);
+                if (L1.getHall().equals(L2.getHall())
+                        && L1.getPeriod().equals(L2.getPeriod())) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -166,7 +302,14 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean seventhRestriction() {
-
+        for (Lecture L : lectures) {
+            Teacher t = L.getTeacher();
+            for (Period p : t.getPeriods()) {
+                if (L.getPeriod().equals(p)) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -207,14 +350,24 @@ public class TimeProgram implements Cloneable {
     public void printProgram() {
         System.out.println("*************** Final Program ******************");
 
-        Lecture[][] lec = new Lecture[5][4];
-
-        for (Lecture lecture : lectures) {
-            lec[lecture.getPeriod().getDay()][lecture.getPeriod().getTime()] = lecture;
+        Lecture[][] lec = new Lecture[6][5];
+        Boolean[][] bo = new Boolean[6][5];
+        for (int i = 1; i <= 5; i++) {
+            for (int j = 1; j <= 4; j++) {
+                bo[i][j] = new Boolean(false);
+            }
         }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 4; j++) {
-                lec[i][j].printLecture();
+        for (Lecture lecture : lectures) {
+            int Day = lecture.getPeriod().getDay();
+            int Time = lecture.getPeriod().getTime();
+            lec[Day][Time] = new Lecture(lecture);
+            bo[Day][Time] = true;
+        }
+        for (int i = 1; i <= 5; i++) {
+            for (int j = 1; j <= 4; j++) {
+                if (bo[i][j]) {
+                    lec[i][j].printLecture();
+                }
             }
         }
         System.out.println("*************************************************");

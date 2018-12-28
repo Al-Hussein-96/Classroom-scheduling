@@ -25,16 +25,18 @@ public class BFS {
 
         queue.offer(grid);
         hashSet.add(grid.hashCode());
-
+        
         while (!queue.isEmpty()) {
+            System.out.println(NumberOfProgram);
             this.NumberOfProgram++;
 
             TimeProgram cur = queue.poll();
             if (cur.isFinal()) {
                 return cur;
             }
-
+            
             List<TimeProgram> AllMoves = cur.getAllProgrm();
+            System.out.println("Size list in BFS = " +AllMoves.size());
             for (TimeProgram u : AllMoves) {
                 if (hashSet.contains(u.hashCode())) {
                     continue;

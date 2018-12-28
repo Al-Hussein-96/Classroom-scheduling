@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +22,32 @@ public class Teacher implements Cloneable {
     private List<Period> periods; /// the time that teather cannot found in university
     private List<TypeLecture> typeLectures;
     private List<SpecializationName> specializationNames;
+
+    public Teacher() {
+    }
+
+    public Teacher(Teacher T) {
+        subjectNames = new ArrayList<>();
+        periods = new ArrayList<>();
+        typeLectures = new ArrayList<>();
+        specializationNames = new ArrayList<>();
+
+        this.Name = T.Name;
+        for (SubjectName SN : T.subjectNames) {
+            this.subjectNames.add(SN);
+        }
+        this.MaximumLecture = T.MaximumLecture;
+        this.MaximumDay = T.MaximumDay;
+        for (Period p : T.periods) {
+            this.periods.add(new Period(p));
+        }
+        for (TypeLecture TL : T.typeLectures) {
+            this.typeLectures.add(TL);
+        }
+        for (SpecializationName SN : T.specializationNames) {
+            this.specializationNames.add(SN);
+        }
+    }
 
     public Teacher(TeacherName Name, List<SubjectName> subjectNames, List<Period> periods, List<TypeLecture> typeLectures, List<SpecializationName> specializationNames) {
         this.Name = Name;
@@ -43,18 +70,6 @@ public class Teacher implements Cloneable {
         this.MaximumDay = MaximumDay;
         this.periods = periods;
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     public TeacherName getName() {
         return Name;

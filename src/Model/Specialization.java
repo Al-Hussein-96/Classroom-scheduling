@@ -13,15 +13,39 @@ public class Specialization implements Cloneable{
 
     private SpecializationName name;
     private int numGroup;
-    private int numClass;
+    private int numCategory;
 
-    public Specialization(SpecializationName name, int numGroup, int numClass) {
+    public Specialization(SpecializationName name, int numGroup, int numCategory) {
         this.name = name;
         this.numGroup = numGroup;
-        this.numClass = numClass;
+        this.numCategory = numCategory;
+    }
+
+    public SpecializationName getName() {
+        return name;
+    }
+
+    public void setName(SpecializationName name) {
+        this.name = name;
+    }
+
+    public int getNumGroup() {
+        return numGroup;
+    }
+
+    public void setNumGroup(int numGroup) {
+        this.numGroup = numGroup;
+    }
+
+    public int getNumCategory() {
+        return numCategory;
+    }
+
+    public void setNumCategory(int numCategory) {
+        this.numCategory = numCategory;
     }
     
-
+    
     // TODO
 //    List<Group>
 //            List<فئات>
