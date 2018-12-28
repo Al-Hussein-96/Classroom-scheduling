@@ -6,6 +6,7 @@
 package classroomscheduling;
 
 import Algorithms.Astar;
+import Algorithms.BFS;
 import Model.Lecture;
 import Model.TimeProgram;
 import Model.University;
@@ -40,7 +41,8 @@ public class ClassroomScheduling extends Application {
         
         Lecture.All_Lectures.get(0).printLecture();
 
-        Astar algorithm = new Astar(new TimeProgram());
+        BFS algorithm = new BFS(new TimeProgram());
+        
 
        // algorithm.Solve().printProgram();
 
