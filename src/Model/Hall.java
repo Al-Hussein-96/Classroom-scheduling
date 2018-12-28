@@ -16,6 +16,11 @@ public class Hall implements Cloneable {
     private String ID;
     private Type type;
 
+    
+    public enum Type {
+        THEATER, LAB;
+    }
+    
     public Hall(String ID, Type type) {
         this.ID = ID;
         this.type = type;
@@ -28,10 +33,6 @@ public class Hall implements Cloneable {
     @Override
     public String toString() {
         return  "ID=" + ID + ", type=" + type ;
-    }
-
-    public enum Type {
-        THEATER, LAB;
     }
 
     public String getID() {

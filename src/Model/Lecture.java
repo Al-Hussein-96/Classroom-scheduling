@@ -8,6 +8,7 @@ package Model;
 import static Model.University.Specializations;
 import static Model.University.halls;
 import static Model.University.periods;
+import static Model.University.subjects;
 import static Model.University.teachers;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,19 @@ public class Lecture implements Cloneable {
         this.CategoryNumber = CategoryNumber;
     }
 
+    public Lecture(SubjectName subject, SpecializationName specializationName, TypeLecture typeLecture, int GroupNumber, int CategoryNumber) {
+        this.subject = subject;
+        this.specializationName = specializationName;
+        this.typeLecture = typeLecture;
+        this.GroupNumber = GroupNumber;
+        this.CategoryNumber = CategoryNumber;
+        
+        this.ID=0;
+        this.teacher = new Teacher();
+        this.period = new Period();
+        this.hall=new Hall("-1",null);
+    }
+
     static {
         All_Lectures = generateAllLecture();
     }
@@ -66,55 +80,43 @@ public class Lecture implements Cloneable {
     private static List<Lecture> generateAllLecture() {
         List<Lecture> lectures = new ArrayList<>();
 
-        int cnt = 1;
-        for (Teacher teacher : teachers) {
-            for (SubjectName name : teacher.getSubjectNames()) {
-                for (Period period : periods) {
-                    for (TypeLecture typeLecture : teacher.getTypeLectures()) {
-                        for (SpecializationName specializationName : teacher.getSpecializationNames()) {
-                            int GNum = 0;
-                            int CNum = 0;
-                            if (specializationName.equals(SpecializationName.Artificial_Intelligence)) {
-                                GNum = Specializations.get(0).getNumGroup();
-                                CNum = Specializations.get(0).getNumCategory();
-                            }
-                            if (specializationName.equals(SpecializationName.Networks)) {
-                                GNum = Specializations.get(1).getNumGroup();
-                                CNum = Specializations.get(1).getNumCategory();
-                            }
-                            if (specializationName.equals(SpecializationName.Software_Engineering)) {
-                                GNum = Specializations.get(2).getNumGroup();
-                                CNum = Specializations.get(2).getNumCategory();
-                            }
-                            for (Hall hall : halls) {
-                                int x = 1;
-                                if (typeLecture.equals(TypeLecture.Practical_LAB)) {
-                                    x = CNum;
-                                } else if (typeLecture.equals(TypeLecture.Practical_THEATER)) {
-                                    x = GNum;
-                                }
-                                for (int i = 1; i <= x; i++) {
-                                    Lecture lecture;
-                                    if (typeLecture.equals(TypeLecture.Practical_LAB)) {
-                                        lecture = new Lecture(cnt++, name, specializationName, typeLecture, teacher, period, hall, 0, i);
-                                    } else if (typeLecture.equals(TypeLecture.Practical_THEATER)) {
-                                        lecture = new Lecture(cnt++, name, specializationName, typeLecture, teacher, period, hall, i, 0);
-                                    } else {
-                                        lecture = new Lecture(cnt++, name, specializationName, typeLecture, teacher, period, hall, 0, 0);
-                                    }
-                                    //     System.out.println("Cnt: " + cnt);
-                                    if (isCompatible(hall.getType(), typeLecture)) {
-                                        lectures.add(lecture);
-                                    }
-                                }
-                            }
-                        }
+        for (Subject subject : subjects) {
+            int x = 0;
+            for (Specialization Spec : Specializations) {
+                if (!SameSpecialization(subject, Spec.getName())) {
+                    continue;
+                }
+                x++;
+                int GNum = Spec.getNumGroup();
+                int CNum = Spec.getNumCategory();
+                if (x == 1) {
+                    for (int i = 1; i <= subject.getNumTheoretical(); i++) {
+                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Theoretical, 0, 0));
+                    }
+                }
+                for (int i = 1; i <= subject.getNumPractical_THEATER(); i++) {
+                    for (int j = 1; j <= GNum; j++) {
+                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_THEATER, j, 0));
+                    }
+                }
+                for (int i = 1; i <= subject.getNumPractical_LAB(); i++) {
+                    for (int j = 1; j <= CNum; j++) {
+                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_LAB, 0, j));
                     }
                 }
             }
         }
         System.out.println("Size Of Lecture is " + lectures.size());
         return lectures;
+    }
+
+    private static boolean SameSpecialization(Subject subject, SpecializationName Sp) {
+        if ((subject.isAI() && Sp.equals(SpecializationName.Artificial_Intelligence))
+                || (subject.isN() && Sp.equals(SpecializationName.Networks))
+                || (subject.isSE() && Sp.equals(SpecializationName.Software_Engineering))) {
+            return true;
+        }
+        return false;
     }
 
     private static boolean isCompatible(Hall.Type type, TypeLecture typeLecture) {
@@ -270,7 +272,7 @@ public class Lecture implements Cloneable {
             System.out.println("Category: " + this.CategoryNumber);
         }
         System.out.println("Period: " + this.period.toString());
-        System.out.println("Hall: "+ this.hall);
+        System.out.println("Hall: " + this.hall);
 
         System.out.println("*****************************************");
 

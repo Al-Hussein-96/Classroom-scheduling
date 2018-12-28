@@ -6,7 +6,10 @@
 package Model;
 
 import static Model.University.Specializations;
+import static Model.University.halls;
+import static Model.University.periods;
 import static Model.University.subjects;
+import static Model.University.teachers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class TimeProgram implements Cloneable {
 
-    private int ID;
     private List<Lecture> lectures = new ArrayList<>();
 
     public TimeProgram() {
@@ -34,14 +36,25 @@ public class TimeProgram implements Cloneable {
 
     public List<TimeProgram> getAllProgrm() {
         List<TimeProgram> list = new ArrayList<>();
-        for (Lecture lecture : Lecture.All_Lectures) {
-            TimeProgram newTimeProgram;
-            newTimeProgram = new TimeProgram(this);
-            newTimeProgram.addLecture(new Lecture(lecture));
-            if (newTimeProgram.checkSubRestrictionforSubProgram()) {
-                list.add(newTimeProgram);
+        Lecture lecture = Lecture.All_Lectures.get(lectures.size());
+        for (Period p : periods) {
+            for (Teacher t : teachers) {
+                for (Hall h : halls) {
+                    if ((lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && !h.getType().equals(Hall.Type.LAB))
+                            || !lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && h.getType().equals(Hall.Type.LAB)) {
+                        continue;
+                    }
+                    Lecture lec = new Lecture(lecture.getSubject(), lecture.getSpecializationName(), lecture.getTypeLecture(), lecture.getGroupNumber(), lecture.getCategoryNumber());
+                    lec.setPeriod(new Period(p));
+                    lec.setTeacher(new Teacher(t));
+                    lec.setHall(new Hall(h));
+                    
+                    TimeProgram newTimeProgram = new TimeProgram(this);
+                    newTimeProgram.addLecture(new Lecture(lec));
+                    if(newTimeProgram.checkSubRestrictionforSubProgram())
+                        list.add(newTimeProgram);
+                }
             }
-
         }
         return list;
     }
@@ -89,82 +102,10 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean firstRestriction() {
-        int x = 0;
-        for (Subject s : subjects) {
-            if (s.isAI()) {
-                int numG = Specializations.get(0).getNumGroup();
-                int numC = Specializations.get(0).getNumCategory();
-
-                int numLec = s.getNumTheoretical();
-                int numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Theoretical, 0, 0);
-                if (numLec != numcontint) {
-                    return false;
-                }
-                x += numLec;
-                numLec = s.getNumPractical_THEATER();
-                for (int i = 1; i <= numG; i++) {
-                    numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Practical_THEATER, i, 0);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-                numLec = s.getNumPractical_LAB();
-                for (int i = 1; i <= numC; i++) {
-                    numcontint = listContint(s.getName(), SpecializationName.Artificial_Intelligence, TypeLecture.Practical_LAB, 0, i);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-            }
-            if (s.isN()) {
-                int numG = Specializations.get(1).getNumGroup();
-                int numC = Specializations.get(1).getNumCategory();
-
-                int numLec = s.getNumPractical_THEATER();
-                for (int i = 1; i <= numG; i++) {
-                    int numcontint = listContint(s.getName(), SpecializationName.Networks, TypeLecture.Practical_THEATER, i, 0);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-                numLec = s.getNumPractical_LAB();
-                for (int i = 1; i <= numC; i++) {
-                    int numcontint = listContint(s.getName(), SpecializationName.Networks, TypeLecture.Practical_LAB, 0, i);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-            }
-            if (s.isSE()) {
-                int numG = Specializations.get(2).getNumGroup();
-                int numC = Specializations.get(2).getNumCategory();
-
-                int numLec = s.getNumPractical_THEATER();
-                for (int i = 1; i <= numG; i++) {
-                    int numcontint = listContint(s.getName(), SpecializationName.Software_Engineering, TypeLecture.Practical_THEATER, i, 0);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-                numLec = s.getNumPractical_LAB();
-                for (int i = 1; i <= numC; i++) {
-                    int numcontint = listContint(s.getName(), SpecializationName.Software_Engineering, TypeLecture.Practical_LAB, 0, i);
-                    if (numLec != numcontint) {
-                        return false;
-                    }
-                    x += numLec;
-                }
-            }
+        if (this.lectures.size() == Lecture.All_Lectures.size()) {
+            return true;
         }
-        if (lectures.size() != x) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     /**
@@ -321,8 +262,7 @@ public class TimeProgram implements Cloneable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + this.ID;
-        hash = 97 * hash + Objects.hashCode(this.lectures);
+        hash = 41 * hash + Objects.hashCode(this.lectures);
         return hash;
     }
 
@@ -338,9 +278,6 @@ public class TimeProgram implements Cloneable {
             return false;
         }
         final TimeProgram other = (TimeProgram) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
         if (!Objects.equals(this.lectures, other.lectures)) {
             return false;
         }
@@ -372,6 +309,14 @@ public class TimeProgram implements Cloneable {
         }
         System.out.println("*************************************************");
 
+    }
+
+    public List<Lecture> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(List<Lecture> lectures) {
+        this.lectures = lectures;
     }
 
 }
