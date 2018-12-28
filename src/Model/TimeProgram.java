@@ -7,12 +7,15 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Al-Hussein
  */
-public class TimeProgram implements Cloneable{
+public class TimeProgram implements Cloneable {
 
     private int ID;
     private List<Lecture> lectures;
@@ -21,31 +24,55 @@ public class TimeProgram implements Cloneable{
 
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-
-    public List<TimeProgram> getAllMoves() {
+    public List<TimeProgram> getAllProgrm() {
         List<TimeProgram> list = new ArrayList<>();
-        
-        
-        
-        
-        
-        return null;
+
+        for (Lecture lecture : Lecture.All_Lectures) {
+            TimeProgram newTimeProgram;
+            try {
+                newTimeProgram = (TimeProgram) this.clone();
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(TimeProgram.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+            newTimeProgram.addLecture(lecture);
+            if (newTimeProgram.checkSubRestrictionforSubProgram()) {
+                list.add(newTimeProgram);
+            }
+        }
+        return list;
     }
 
-        
+    public void addLecture(Lecture lecture) {
+        this.lectures.add(lecture);
+    }
+
+    /**
+     * for check from All restriction
+     *
+     * @return true if all restriction is true
+     */
+    public boolean checkSubRestrictionforSubProgram() {
+        return fourthRestriction() && fifthRestriction() && sixthRestriction() && seventhRestriction();
+    }
+
+    /**
+     *
+     * @return true if The program is final
+     */
+    public boolean isFinal() {
+        return firstRestriction();
+    }
+
     /**
      * for check from All restriction
      *
      * @return true if all restriction is true
      */
     public boolean checkAllrestriction() {
-        return fifthRestriction() && secondRestriction() && thirdRestriction() && fourthRestriction() && fifthRestriction() && sixthRestriction()
+        return fifthRestriction() && secondRestriction()
+                && thirdRestriction() && fourthRestriction()
+                && fifthRestriction() && sixthRestriction()
                 && seventhRestriction();
     }
 
@@ -141,6 +168,57 @@ public class TimeProgram implements Cloneable{
     public boolean seventhRestriction() {
 
         return true;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.ID;
+        hash = 97 * hash + Objects.hashCode(this.lectures);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TimeProgram other = (TimeProgram) obj;
+        if (this.ID != other.ID) {
+            return false;
+        }
+        if (!Objects.equals(this.lectures, other.lectures)) {
+            return false;
+        }
+        return true;
+    }
+
+    public void printProgram() {
+        System.out.println("*************** Final Program ******************");
+
+        Lecture[][] lec = new Lecture[5][4];
+
+        for (Lecture lecture : lectures) {
+            lec[lecture.getPeriod().getDay()][lecture.getPeriod().getTime()] = lecture;
+        }
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 4; j++) {
+                lec[i][j].printLecture();
+            }
+        }
+        System.out.println("*************************************************");
+
     }
 
 }

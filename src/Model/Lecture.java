@@ -10,6 +10,7 @@ import static Model.University.periods;
 import static Model.University.teachers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -38,11 +39,6 @@ public class Lecture implements Cloneable {
         this.teacher = teacher;
         this.period = period;
         this.hall = hall;
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     static {
@@ -88,6 +84,116 @@ public class Lecture implements Cloneable {
             return true;
         }
         return false;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public SubjectName getSubject() {
+        return subject;
+    }
+
+    public void setSubject(SubjectName subject) {
+        this.subject = subject;
+    }
+
+    public SpecializationName getSpecializationName() {
+        return specializationName;
+    }
+
+    public void setSpecializationName(SpecializationName specializationName) {
+        this.specializationName = specializationName;
+    }
+
+    public TypeLecture getTypeLecture() {
+        return typeLecture;
+    }
+
+    public void setTypeLecture(TypeLecture typeLecture) {
+        this.typeLecture = typeLecture;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.ID;
+        hash = 71 * hash + Objects.hashCode(this.subject);
+        hash = 71 * hash + Objects.hashCode(this.specializationName);
+        hash = 71 * hash + Objects.hashCode(this.typeLecture);
+        hash = 71 * hash + Objects.hashCode(this.teacher);
+        hash = 71 * hash + Objects.hashCode(this.period);
+        hash = 71 * hash + Objects.hashCode(this.hall);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lecture other = (Lecture) obj;
+        if (this.ID != other.ID) {
+            return false;
+        }
+        if (this.subject != other.subject) {
+            return false;
+        }
+        if (this.specializationName != other.specializationName) {
+            return false;
+        }
+        if (this.typeLecture != other.typeLecture) {
+            return false;
+        }
+        if (!Objects.equals(this.teacher, other.teacher)) {
+            return false;
+        }
+        if (!Objects.equals(this.period, other.period)) {
+            return false;
+        }
+        if (!Objects.equals(this.hall, other.hall)) {
+            return false;
+        }
+        return true;
     }
 
     public void printLecture() {

@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.util.Date;
-
 /**
  *
  * @author Al-Hussein
@@ -21,10 +19,50 @@ public class Period implements Cloneable {
         this.time = time;
     }
 
+    public int getDay() {
+        return Day;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.Day;
+        hash = 71 * hash + this.time;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Period other = (Period) obj;
+        if (this.Day != other.Day) {
+            return false;
+        }
+        if (this.time != other.time) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 
     @Override
     public String toString() {

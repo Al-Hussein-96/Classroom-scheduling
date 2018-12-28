@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Al-Hussein
  */
-public class Hall implements Cloneable{
+public class Hall implements Cloneable {
 
     private String ID;
     private Type type;
@@ -18,8 +20,6 @@ public class Hall implements Cloneable{
         this.ID = ID;
         this.type = type;
     }
-    
-    
 
     public enum Type {
         THEATER, LAB;
@@ -33,8 +33,6 @@ public class Hall implements Cloneable{
         this.ID = ID;
     }
 
-    
-
     public Type getType() {
         return type;
     }
@@ -47,7 +45,34 @@ public class Hall implements Cloneable{
     protected Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.ID);
+        hash = 67 * hash + Objects.hashCode(this.type);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hall other = (Hall) obj;
+        if (!Objects.equals(this.ID, other.ID)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return true;
+    }
+
 }

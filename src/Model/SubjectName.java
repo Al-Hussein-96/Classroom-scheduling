@@ -31,6 +31,8 @@ public enum SubjectName implements Cloneable{
     
     
     
+    
+    
 //    SOFTWARE_THEOR, SOFTWARE_PRAC, 
 //    OPERATING_SYSTEM_THEOR, OPERATING_SYSTEM_PRAC,
 //    NN_THEOR,NN_PRAC,

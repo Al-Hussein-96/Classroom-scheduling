@@ -5,6 +5,9 @@
  */
 package classroomscheduling;
 
+import Algorithms.Astar;
+import Model.Lecture;
+import Model.TimeProgram;
 import Model.University;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +38,11 @@ public class ClassroomScheduling extends Application {
         //    launch(args);
         University university = new University();
         
+        Lecture.All_Lectures.get(0).printLecture();
+
+        Astar algorithm = new Astar(new TimeProgram());
+
+       // algorithm.Solve().printProgram();
 
     }
 

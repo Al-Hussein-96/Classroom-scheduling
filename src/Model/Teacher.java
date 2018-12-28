@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -42,6 +43,18 @@ public class Teacher implements Cloneable {
         this.MaximumDay = MaximumDay;
         this.periods = periods;
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public TeacherName getName() {
         return Name;
@@ -99,6 +112,58 @@ public class Teacher implements Cloneable {
         this.specializationNames = specializationNames;
     }
 
-    
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.Name);
+        hash = 31 * hash + Objects.hashCode(this.subjectNames);
+        hash = 31 * hash + this.MaximumLecture;
+        hash = 31 * hash + this.MaximumDay;
+        hash = 31 * hash + Objects.hashCode(this.periods);
+        hash = 31 * hash + Objects.hashCode(this.typeLectures);
+        hash = 31 * hash + Objects.hashCode(this.specializationNames);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Teacher other = (Teacher) obj;
+        if (this.MaximumLecture != other.MaximumLecture) {
+            return false;
+        }
+        if (this.MaximumDay != other.MaximumDay) {
+            return false;
+        }
+        if (this.Name != other.Name) {
+            return false;
+        }
+        if (!Objects.equals(this.subjectNames, other.subjectNames)) {
+            return false;
+        }
+        if (!Objects.equals(this.periods, other.periods)) {
+            return false;
+        }
+        if (!Objects.equals(this.typeLectures, other.typeLectures)) {
+            return false;
+        }
+        if (!Objects.equals(this.specializationNames, other.specializationNames)) {
+            return false;
+        }
+        return true;
+    }
 
 }

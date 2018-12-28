@@ -127,23 +127,7 @@ public class University {
         teachers.add(new Teacher(TeacherName.X, subjectNames, periods, typeLectures, specializationNames));
         teachers.add(new Teacher(TeacherName.Y, subjectNames, periods, typeLectures, specializationNames));
         teachers.add(new Teacher(TeacherName.Z, subjectNames, periods, typeLectures, specializationNames));
-        
-        Lecture.All_Lectures.get(0).printLecture();
 
-//        Teacher = new Teacher(TeacherName.Ammar_nahas,,100,100,);
-        // Add Static Data To University
-//        teachers.add(new Teacher(1,SubjectName.SOFTWARE_THEOR));
-//        teachers.add(new Teacher(2,SubjectName.SOFTWARE_PRAC));
-//        teachers.add(new Teacher(3,SubjectName.OPERATING_SYSTEM_THEOR));
-//        teachers.add(new Teacher(4,SubjectName.OPERATING_SYSTEM_PRAC));
-//        teachers.add(new Teacher(5,SubjectName.NN_THEOR));
-//        teachers.add(new Teacher(6,SubjectName.NN_PRAC));
-//        teachers.add(new Teacher(7,SubjectName.ECONOMIE_THEOR));
-//        teachers.add(new Teacher(8,SubjectName.ECONOMIE_PRAC));
-//        teachers.add(new Teacher(9,SubjectName.COMPILER_THEOR));
-//        teachers.add(new Teacher(10,SubjectName.COMPILER_PRAC));
-//        teachers.add(new Teacher(11,SubjectName.ALGO_THEOR));
-//        teachers.add(new Teacher(12,SubjectName.ALGO_PRAC));
     }
 
 }
