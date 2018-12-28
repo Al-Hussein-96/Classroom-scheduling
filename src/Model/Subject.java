@@ -4,7 +4,7 @@ package Model;
  *
  * @author Al-Hussein
  */
-public class Subject {
+public class Subject implements Cloneable{
 
     private SubjectName name;
     private int NumTheoretical;
@@ -21,6 +21,13 @@ public class Subject {
         this.SE = SE;
         this.N = N;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     
 

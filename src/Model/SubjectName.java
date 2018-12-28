@@ -9,7 +9,7 @@ package Model;
  *
  * @author Al-Hussein
  */
-public enum SubjectName {
+public enum SubjectName implements Cloneable{
     /**
      * AI  ==> Artificial Intelligence
      * SE  ==> Software Engineering
@@ -26,6 +26,9 @@ public enum SubjectName {
     COMPILER_SE,
     AppNetworks_N,
     DATABASE_SE;
+    
+    
+    
     
     
 //    SOFTWARE_THEOR, SOFTWARE_PRAC, 

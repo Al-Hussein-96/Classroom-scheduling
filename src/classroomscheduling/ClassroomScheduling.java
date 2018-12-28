@@ -34,6 +34,7 @@ public class ClassroomScheduling extends Application {
     public static void main(String[] args) {
         //    launch(args);
         University university = new University();
+        
 
     }
 

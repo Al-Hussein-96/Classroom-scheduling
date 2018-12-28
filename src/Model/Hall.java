@@ -9,22 +9,31 @@ package Model;
  *
  * @author Al-Hussein
  */
-public class Hall {
+public class Hall implements Cloneable{
 
-    private int ID;
+    private String ID;
     private Type type;
+
+    public Hall(String ID, Type type) {
+        this.ID = ID;
+        this.type = type;
+    }
+    
+    
 
     public enum Type {
         THEATER, LAB;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
+
+    
 
     public Type getType() {
         return type;
@@ -33,5 +42,12 @@ public class Hall {
     public void setType(Type type) {
         this.type = type;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

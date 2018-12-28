@@ -9,7 +9,7 @@ package Model;
  *
  * @author Moaz
  */
-public enum SpecializationName {
+public enum SpecializationName implements Cloneable{
     Artificial_Intelligence, Software_Engineering,
         Networks;
 }

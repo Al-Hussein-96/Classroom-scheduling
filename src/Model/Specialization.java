@@ -9,7 +9,7 @@ package Model;
  *
  * @author Al-Hussein
  */
-public class Specialization {
+public class Specialization implements Cloneable{
 
     private SpecializationName name;
     private int numGroup;
@@ -20,9 +20,15 @@ public class Specialization {
         this.numGroup = numGroup;
         this.numClass = numClass;
     }
+    
 
     // TODO
 //    List<Group>
 //            List<فئات>
     // تابع اضافة لليست بالاعلى
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
 }
