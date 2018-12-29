@@ -129,7 +129,7 @@ public class TimeProgram implements Cloneable {
                 h = H;
                 break;
             }
-
+            if(h==null)continue;
             for (Teacher t : teachers) {
 
                 /**
