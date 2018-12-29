@@ -18,6 +18,7 @@ public class University {
     public static List<Hall> halls;
 
     public University() {
+        
         subjects = new ArrayList<>();
         periods = new ArrayList<>();
         Specializations = new ArrayList<>();

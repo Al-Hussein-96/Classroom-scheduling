@@ -287,17 +287,29 @@ public class TimeProgram implements Cloneable {
                 Lecture L1 = lectures.get(i);
                 Lecture L2 = lectures.get(j);
                 if (L1.getPeriod().equals(L2.getPeriod())) {
-                    if (L1.getSpecializationName().equals(L2.getSpecializationName())) {
-                        if (L1.getGroupNumber() == L2.getGroupNumber()) {
+                    if(L1.getSpecializationName().equals(L2.getSpecializationName()))
+                    {
+                        if(cheack_if_one_lecture_inside_other(L1,L2))
                             return false;
+                        if(cheack_if_one_lecture_inside_other(L2,L1))
+                           return false;
+                    }
+                    else
+                    {
+                        if(L1.getTypeLecture().equals(TypeLecture.Theoretical))
+                        {
+                            if(checkCommonTwoSpec(L1.getSpecializationName() , L2.getSpecializationName(),L1.getSubject()))
+                            {
+                                return false;
+                            }
                         }
-                        if (L1.getCategoryNumber() == L2.getCategoryNumber()) {
-                            return false;
+                        if(L2.getTypeLecture().equals(TypeLecture.Theoretical))
+                        {
+                            if(checkCommonTwoSpec(L2.getSpecializationName() , L1.getSpecializationName(),L2.getSubject()))
+                            {
+                                return false;
+                            }
                         }
-                        if (L1.getTypeLecture().equals(L2.getTypeLecture()) && L1.getTypeLecture().equals(TypeLecture.Theoretical)) {
-                            return false;
-                        }
-
                     }
                 }
 
@@ -307,6 +319,91 @@ public class TimeProgram implements Cloneable {
         return true;
     }
 
+   public boolean checkCommonTwoSpec(SpecializationName sp1, SpecializationName sp2, SubjectName name) {
+        for (Subject s : subjects) {
+            if (s.getName().equals(name)) {
+                SpecializationName s1 = null, s2 = null, s3 = null;
+                if (s.isAI()) {
+                    s1 = SpecializationName.Artificial_Intelligence;
+                }
+                if (s.isSE()) {
+                    s2 = SpecializationName.Software_Engineering;
+                }
+                if (s.isN()) {
+                    s3 = SpecializationName.Networks;
+                }
+ 
+                boolean ok1 = sp1.equals(s1) || sp1.equals(s2) || sp1.equals(s3);
+                boolean ok2 = sp2.equals(s1) || sp2.equals(s2) || sp2.equals(s3);
+ 
+                return ok1 && ok2;
+ 
+            }
+        }
+        return false;
+ 
+    }
+    public boolean cheack_if_one_lecture_inside_other(Lecture L1 , Lecture L2)
+    {
+        TypeLecture Type1 = L1.getTypeLecture();
+        TypeLecture Type2 = L2.getTypeLecture();
+        if(Type1.equals(TypeLecture.Theoretical))
+        {
+            return true;
+        }
+        if(Type2.equals(TypeLecture.Theoretical))
+        {
+            return true;
+        }
+        if(Type1.equals(Type2))
+        {
+            if(Type1.equals(TypeLecture.Practical_LAB))
+            {
+                if(L1.getCategoryNumber() == L2.getCategoryNumber())
+                    return true;
+            }
+            
+            if(Type1.equals(TypeLecture.Practical_THEATER))
+            {
+                if(L1.getGroupNumber()== L2.getGroupNumber())
+                    return true;
+            }
+        }
+        else 
+        {
+            SpecializationName sp1 = L1.getSpecializationName();
+            int Number_of_Group = 0;
+            int Number_of_Category = 0;
+            for(Specialization sp : Specializations)
+            {
+                if(sp.getName().equals(sp1))
+                {
+                    Number_of_Category = sp.getNumCategory();
+                    Number_of_Group = sp.getNumGroup();
+                }
+            }
+            int Start_Category = 0 ;
+            int End_Category = 0;
+            int x = (Number_of_Category+Number_of_Group-1)/Number_of_Group;
+            
+            if(Type1.equals(TypeLecture.Practical_LAB))
+            {
+                Start_Category = L2.getCategoryNumber()*(x-1)+1;
+                End_Category = Start_Category+x-1;
+                if(L2.getCategoryNumber() >= Start_Category && L2.getCategoryNumber() <= End_Category)
+                    return true;
+            }
+            else 
+            {
+                 Start_Category = L2.getCategoryNumber()*(x-1)+1;
+                 End_Category = Start_Category+x-1;
+                 if(L1.getCategoryNumber() >= Start_Category && L1.getCategoryNumber() <= End_Category)
+                    return true;
+            }
+            
+        }
+        return false;
+    }
     /**
      * The sixth restriction
      * <p>
