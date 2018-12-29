@@ -9,30 +9,22 @@ package Model;
  *
  * @author Al-Hussein
  */
-public enum SubjectName implements Cloneable{
+public enum SubjectName implements Cloneable {
     /**
-     * AI  ==> Artificial Intelligence
-     * SE  ==> Software Engineering
-     * N   ==> Networks
-     * */
-    SOFTWARE_AI_N, 
-    SOFTWARE_SE,
-    ALGO_SE_N,
-    ALGO_AI,
-    OPERATING_SYSTEM,
-    NN_AI,
-    ECONOMIE,
+     * AI ==> Artificial Intelligence SE ==> Software Engineering N ==> Networks
+     *
+     */
     COMPILER_AI,
     COMPILER_SE,
+    SOFTWARE_AI_N,
+    SOFTWARE_SE,
+    NN_AI,
+    DATABASE_SE,
     AppNetworks_N,
-    DATABASE_SE;
-    
-    
-    
-    
-    
-    
-    
+    ALGO,
+    OPERATING_SYSTEM,
+    ECONOMIE;
+
 //    SOFTWARE_THEOR, SOFTWARE_PRAC, 
 //    OPERATING_SYSTEM_THEOR, OPERATING_SYSTEM_PRAC,
 //    NN_THEOR,NN_PRAC,

@@ -5,11 +5,11 @@
  */
 package classroomscheduling;
 
-import Algorithms.Astar;
 import Algorithms.BFS;
 import Model.Lecture;
 import Model.TimeProgram;
 import Model.University;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,13 +38,22 @@ public class ClassroomScheduling extends Application {
     public static void main(String[] args) {
         //    launch(args);
         University university = new University();
-        
-        Lecture.All_Lectures.get(0).printLecture();
 
-//        BFS algorithm = new BFS(new TimeProgram());
-//        
-//
-//        TimeProgram t = algorithm.Solve();
+        Lecture l = new Lecture();
+
+
+//        List<Lecture> lectures = Lecture.All_Lectures;
+//        for (Lecture lecture : lectures) {
+//            lecture.printLecture();
+//        }
+        BFS algorithm = new BFS(new TimeProgram());
+        TimeProgram t = algorithm.Solve();
+        
+        System.out.println("Size: " + t.getLectures().size());
+        for(Lecture u:t.getLectures())
+            u.printLecture();
+        //t.printProgram();
+        System.out.println("Finish");
 //        if(t!=null)t.printProgram();
 //        else System.out.println("Error");
 

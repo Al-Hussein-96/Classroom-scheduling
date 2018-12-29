@@ -15,10 +15,16 @@ public enum TeacherName implements Cloneable{
     A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,
     
     Mohamad_alahmad , Basel_alkhateb,
-    Nawras_alwatfa , Maysa_abo_kasem,
-    Waseem_ahmad,
-    //  عملي
-    Ammar_nahas;
+    Nawras_watfa , Maysa_abo_kasem,
+    Waseem_ahmad,Ammar_Jokhdar,
+    Madeleine_Abboud,
+
+    /** prac */
+    Ammar_nahas,Lujain_Harmelani,
+    Maher_Alsarem,Omar_Ibrahim,
+    Rawan_Qarouni,Sawsan_AlHasan,
+    ;
+
     
    
 }

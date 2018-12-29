@@ -21,22 +21,23 @@ import java.util.logging.Logger;
  * @author Al-Hussein
  */
 public class TimeProgram implements Cloneable {
-
+    
     private List<Lecture> lectures = new ArrayList<>();
-
+    
     public TimeProgram() {
-
+        
     }
-
+    
     public TimeProgram(TimeProgram TP) {
         for (Lecture L : TP.lectures) {
             this.lectures.add(new Lecture(L));
         }
     }
-
+    
     public List<TimeProgram> getAllProgrm() {
         List<TimeProgram> list = new ArrayList<>();
         Lecture lecture = Lecture.All_Lectures.get(lectures.size());
+        int out = 0;
         for (Period p : periods) {
             for (Teacher t : teachers) {
                 for (Hall h : halls) {
@@ -51,14 +52,22 @@ public class TimeProgram implements Cloneable {
                     
                     TimeProgram newTimeProgram = new TimeProgram(this);
                     newTimeProgram.addLecture(new Lecture(lec));
-                    if(newTimeProgram.checkSubRestrictionforSubProgram())
+                    if (newTimeProgram.checkSubRestrictionforSubProgram()) {
                         list.add(newTimeProgram);
+                    } else {
+                        out++;
+                        
+                        if (out < 2) {
+                            newTimeProgram.printProgram();
+                        }
+                    }
                 }
             }
         }
+        System.out.println(list.size() + " : " + out);
         return list;
     }
-
+    
     public void addLecture(Lecture lecture) {
         this.lectures.add(lecture);
     }
@@ -151,7 +160,7 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean thirdRestriction() {
-
+        
         return true;
     }
 
@@ -164,19 +173,19 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean fourthRestriction() {
-        for (int i = 0; i < lectures.size(); i++) {
-            for (int j = 0; j < lectures.size(); j++) {
-                if (i == j) {
-                    continue;
-                }
-                Lecture L1 = lectures.get(i);
-                Lecture L2 = lectures.get(j);
-                if (L1.getTeacher().getName().equals(L2.getTeacher().getName())
-                        && L1.getPeriod().equals(L2.getPeriod())) {
-                    return false;
-                }
-            }
-        }
+//        for (int i = 0; i < lectures.size(); i++) {
+//            for (int j = 0; j < lectures.size(); j++) {
+//                if (i == j) {
+//                    continue;
+//                }
+//                Lecture L1 = lectures.get(i);
+//                Lecture L2 = lectures.get(j);
+//                if (L1.getTeacher().getName().equals(L2.getTeacher().getName())
+//                        && L1.getPeriod().equals(L2.getPeriod())) {
+//                    return false;
+//                }
+//            }
+//        }
         return true;
     }
 
@@ -243,29 +252,29 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean seventhRestriction() {
-        for (Lecture L : lectures) {
-            Teacher t = L.getTeacher();
-            for (Period p : t.getPeriods()) {
-                if (L.getPeriod().equals(p)) {
-                    return false;
-                }
-            }
-        }
+//        for (Lecture L : lectures) {
+//            Teacher t = L.getTeacher();
+//            for (Period p : L.getPeriods()) {
+//                if (L.getPeriod().equals(p)) {
+//                    return false;
+//                }
+//            }
+//        }
         return true;
     }
-
+    
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 41 * hash + Objects.hashCode(this.lectures);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -283,10 +292,10 @@ public class TimeProgram implements Cloneable {
         }
         return true;
     }
-
+    
     public void printProgram() {
         System.out.println("*************** Final Program ******************");
-
+        
         Lecture[][] lec = new Lecture[6][5];
         Boolean[][] bo = new Boolean[6][5];
         for (int i = 1; i <= 5; i++) {
@@ -308,15 +317,27 @@ public class TimeProgram implements Cloneable {
             }
         }
         System.out.println("*************************************************");
-
+        
     }
-
+    
     public List<Lecture> getLectures() {
         return lectures;
     }
-
+    
     public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
     }
-
+    
+    public boolean canAddLecture(Lecture u, Period period) {
+        u.setPeriod(period);
+        addLecture(u);
+        if (this.checkSubRestrictionforSubProgram()) {
+            this.lectures.remove(u);
+            return true;
+        }
+        
+        this.lectures.remove(u);
+        return false;
+    }
+    
 }

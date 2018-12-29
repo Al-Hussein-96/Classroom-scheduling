@@ -94,16 +94,16 @@ public class Lecture implements Cloneable {
                         lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Theoretical, 0, 0));
                     }
                 }
-                for (int i = 1; i <= subject.getNumPractical_THEATER(); i++) {
-                    for (int j = 1; j <= GNum; j++) {
-                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_THEATER, j, 0));
-                    }
-                }
-                for (int i = 1; i <= subject.getNumPractical_LAB(); i++) {
-                    for (int j = 1; j <= CNum; j++) {
-                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_LAB, 0, j));
-                    }
-                }
+//                for (int i = 1; i <= subject.getNumPractical_THEATER(); i++) {
+//                    for (int j = 1; j <= GNum; j++) {
+//                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_THEATER, j, 0));
+//                    }
+//                }
+//                for (int i = 1; i <= subject.getNumPractical_LAB(); i++) {
+//                    for (int j = 1; j <= CNum; j++) {
+//                        lectures.add(new Lecture(subject.getName(), Spec.getName(), TypeLecture.Practical_LAB, 0, j));
+//                    }
+//                }
             }
         }
         System.out.println("Size Of Lecture is " + lectures.size());
@@ -130,6 +130,9 @@ public class Lecture implements Cloneable {
             return true;
         }
         return false;
+    }
+
+    public Lecture() {
     }
 
     public int getID() {
@@ -205,7 +208,7 @@ public class Lecture implements Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -257,6 +260,8 @@ public class Lecture implements Cloneable {
         }
         return true;
     }
+    
+    
 
     public void printLecture() {
 

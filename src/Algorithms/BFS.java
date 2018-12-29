@@ -1,10 +1,15 @@
 package Algorithms;
 
+import Model.Lecture;
+import Model.Period;
 import Model.TimeProgram;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,41 +17,70 @@ import java.util.Queue;
  */
 public class BFS {
 
-    private TimeProgram grid;
+    private TimeProgram program;
     private int NumberOfProgram = 0;
 
     public BFS(TimeProgram grid) {
-        this.grid = grid;
+        this.program = grid;
     }
 
     public TimeProgram Solve() {
-        Queue<TimeProgram> queue = new LinkedList<>();
-        HashSet<Integer> hashSet = new HashSet<>();
+        List<Lecture> lectures = new ArrayList<>();
 
-        queue.offer(grid);
-        hashSet.add(grid.hashCode());
-        
-        while (!queue.isEmpty()) {
-//            System.out.println(NumberOfProgram);
-            this.NumberOfProgram++;
-
-            TimeProgram cur = queue.poll();
-            if (cur.isFinal()) {
-                return cur;
-            }
-            
-            List<TimeProgram> AllMoves = cur.getAllProgrm();
-//            System.out.println("Size list in BFS = " +AllMoves.size() +"  size list inside it = " + AllMoves.get(0).getLectures().size());
-            for (TimeProgram u : AllMoves) {
-                if (hashSet.contains(u.hashCode())) {
-                    continue;
-                }
-                hashSet.add(u.hashCode());
-                queue.offer(u);
+        for (Lecture l : Lecture.All_Lectures) {
+            try {
+                lectures.add((Lecture) l.clone());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(BFS.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        return null;
+        Queue<Lecture> queue = new LinkedList<>();
+        HashSet<Integer> hashSet = new HashSet<>();
+
+        Lecture start;
+        try {
+            start = (Lecture) lectures.get(0).clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(BFS.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+        int day = 1, time = 1;
+        start.setPeriod(new Period(day, time));
+
+        queue.offer(start);
+        hashSet.add(start.hashCode());
+        // program.addLecture(start);
+
+        while (!queue.isEmpty()) {
+            // System.out.println("Size Queue: " + queue.size());
+            this.NumberOfProgram++;
+
+            Lecture cur = queue.poll();
+
+            time++;
+            if (time > 4) {
+                day++;
+                time = 1;
+            }
+            this.program.addLecture(cur);
+
+            List<Lecture> AllMoves = lectures;
+            for (Lecture u : AllMoves) {
+                if (hashSet.contains(u.hashCode())) {
+                    continue;
+                }
+                if (this.program.canAddLecture(u, new Period(day, time)));
+                {
+
+                    hashSet.add(u.hashCode());
+                    queue.offer(u);
+                }
+
+            }
+        }
+        return program;
     }
 
     public int getNumberOfProgram() {
