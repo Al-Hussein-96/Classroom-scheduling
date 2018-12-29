@@ -119,52 +119,100 @@ public class University {
         teachers.add(new Teacher(TeacherName.Mohamad_alahmad, list1, p, list2, list3));
 
         /// Second Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.ALGO);
         list1.add(SubjectName.COMPILER_AI);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
 
         teachers.add(new Teacher(TeacherName.Basel_alkhateb, list1, p, list2, specializationNames));
 
         /// Third Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.ECONOMIE);
-
-        teachers.add(new Teacher(TeacherName.Nawras_watfa, list1, p, list2, list3));
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
+        
+        list3 = new ArrayList<>();
+        list3.add(SpecializationName.Networks);
+        list3.add(SpecializationName.Artificial_Intelligence);
+        
+        teachers.add(new Teacher(TeacherName.Nawras_watfa, list1, p, list2, specializationNames));
 
         /// Fourth Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.NN_AI);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
 
-        list3.clear();
+        list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
 
         teachers.add(new Teacher(TeacherName.Maysa_abo_kasem, list1, p, list2, list3));
 
         /// fifth Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.OPERATING_SYSTEM);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
 
         teachers.add(new Teacher(TeacherName.Waseem_ahmad, list1, p, list2, specializationNames));
 
         /// sixth Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.AppNetworks_N);
-
-        list3.clear();
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
+        
+        list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
 
         teachers.add(new Teacher(TeacherName.Ammar_Jokhdar, list1, p, list2, list3));
 
         /// seventh Teacher
-        list1.clear();
+        list1 = new ArrayList<>();
         list1.add(SubjectName.DATABASE_SE);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
 
-        list3.clear();
+        list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
 
         teachers.add(new Teacher(TeacherName.Madeleine_Abboud, list1, p, list2, list3));
         
         
+        
+         /// 8 Teacher
+        list1 = new ArrayList<>();
+        list1.add(SubjectName.COMPILER_SE);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
+
+        list3 = new ArrayList<>();
+        list3.add(SpecializationName.Software_Engineering);
+
+        teachers.add(new Teacher(TeacherName.Salah_aldohji, list1, p, list2, list3));
+        
+        
+         /// 9 Teacher
+        list1 = new ArrayList<>();
+        list1.add(SubjectName.SOFTWARE_SE);
+        
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Theoretical);
+
+        list3 = new ArrayList<>();
+        list3.add(SpecializationName.Software_Engineering);
+
+        teachers.add(new Teacher(TeacherName.Saeed_abotrab, list1, p, list2, list3));
+       
 
 //        teachers.add(new Teacher(TeacherName.H, subjectNames, p, typeLectures, specializationNames));
 //        teachers.add(new Teacher(TeacherName.I, subjectNames, p, typeLectures, specializationNames));

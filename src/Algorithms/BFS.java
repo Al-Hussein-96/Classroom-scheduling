@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,70 +18,42 @@ import java.util.logging.Logger;
  */
 public class BFS {
 
-    private TimeProgram program;
+    private TimeProgram grid;
     private int NumberOfProgram = 0;
 
     public BFS(TimeProgram grid) {
-        this.program = grid;
+        this.grid = grid;
     }
 
-    public TimeProgram Solve() {
-        List<Lecture> lectures = new ArrayList<>();
-
-        for (Lecture l : Lecture.All_Lectures) {
-            try {
-                lectures.add((Lecture) l.clone());
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(BFS.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        Queue<Lecture> queue = new LinkedList<>();
+        public TimeProgram Solve() {
+        Stack <TimeProgram> stack = new Stack();
         HashSet<Integer> hashSet = new HashSet<>();
 
-        Lecture start;
-        try {
-            start = (Lecture) lectures.get(0).clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(BFS.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-        int day = 1, time = 1;
-        start.setPeriod(new Period(day, time));
-
-        queue.offer(start);
-        hashSet.add(start.hashCode());
-        // program.addLecture(start);
-
-        while (!queue.isEmpty()) {
-            // System.out.println("Size Queue: " + queue.size());
+        stack.add(grid);
+        hashSet.add(grid.hashCode());
+        
+        while (!stack.isEmpty()) {
+           System.out.println(NumberOfProgram);
             this.NumberOfProgram++;
+            
 
-            Lecture cur = queue.poll();
-
-            time++;
-            if (time > 4) {
-                day++;
-                time = 1;
+            TimeProgram cur = stack.pop();
+            if (cur.isFinal()) {
+                return cur;
             }
-            this.program.addLecture(cur);
-
-            List<Lecture> AllMoves = lectures;
-            for (Lecture u : AllMoves) {
+            
+            List<TimeProgram> AllMoves = cur.getAllProgrm();
+//            System.out.println("Size list in BFS = " +AllMoves.size() +"  size list inside it = " + AllMoves.get(0).getLectures().size());
+            for (TimeProgram u : AllMoves) {
                 if (hashSet.contains(u.hashCode())) {
                     continue;
                 }
-                if (this.program.canAddLecture(u, new Period(day, time)));
-                {
-
-                    hashSet.add(u.hashCode());
-                    queue.offer(u);
-                }
-
+                hashSet.add(u.hashCode());
+                stack.add(u);
             }
         }
-        return program;
+
+        return null;
     }
 
     public int getNumberOfProgram() {

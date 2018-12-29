@@ -21,53 +21,134 @@ import java.util.logging.Logger;
  * @author Al-Hussein
  */
 public class TimeProgram implements Cloneable {
-    
+
     private List<Lecture> lectures = new ArrayList<>();
-    
+
     public TimeProgram() {
-        
+
     }
-    
+
     public TimeProgram(TimeProgram TP) {
         for (Lecture L : TP.lectures) {
             this.lectures.add(new Lecture(L));
         }
     }
-    
-    public List<TimeProgram> getAllProgrm() {
-        List<TimeProgram> list = new ArrayList<>();
-        Lecture lecture = Lecture.All_Lectures.get(lectures.size());
-        int out = 0;
-        for (Period p : periods) {
-            for (Teacher t : teachers) {
-                for (Hall h : halls) {
-                    if ((lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && !h.getType().equals(Hall.Type.LAB))
-                            || !lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && h.getType().equals(Hall.Type.LAB)) {
-                        continue;
-                    }
-                    Lecture lec = new Lecture(lecture.getSubject(), lecture.getSpecializationName(), lecture.getTypeLecture(), lecture.getGroupNumber(), lecture.getCategoryNumber());
-                    lec.setPeriod(new Period(p));
-                    lec.setTeacher(new Teacher(t));
-                    lec.setHall(new Hall(h));
-                    
-                    TimeProgram newTimeProgram = new TimeProgram(this);
-                    newTimeProgram.addLecture(new Lecture(lec));
-                    if (newTimeProgram.checkSubRestrictionforSubProgram()) {
-                        list.add(newTimeProgram);
-                    } else {
-                        out++;
-                        
-                        if (out < 2) {
-                            newTimeProgram.printProgram();
+
+    /// this fuction to Now if teacher Can give Lector
+
+    public boolean can_Give_Lecture(Teacher t, Lecture lecture, Period p) {
+        SubjectName subject = lecture.getSubject();
+        SpecializationName specializationName = lecture.getSpecializationName();
+        TypeLecture typeLecture = lecture.getTypeLecture();
+        /// have same subject
+        for (SubjectName s : t.getSubjectNames()) {
+            if (s.equals(subject)) {
+                /// have same Specializatio
+                for (SpecializationName spName : t.getSpecializationNames()) {
+                    if (spName.equals(specializationName)) {
+                        for (TypeLecture TypeL : t.getTypeLectures()) {
+                            if (TypeL.equals(typeLecture)) {
+                                return Teacher_can_Give_Lecture_In_this_Period(t, p);
+
+                            }
                         }
                     }
                 }
             }
         }
-        System.out.println(list.size() + " : " + out);
+        return false;
+    }
+
+    /// sixthRestriction Hall should be empty
+    public boolean Hall_is_Empty(Hall h, Period p) {
+        for (Lecture lec : lectures) {
+            if (lec.getPeriod().equals(p)) {
+                if (lec.getHall().equals(h)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /// this solve fourth restriction && seventh restriction
+    public boolean Teacher_can_Give_Lecture_In_this_Period(Teacher t, Period p) {
+        /**
+         * The fourth restriction The same teacher can not give more than one
+         * lecture at the same time
+         */
+        for (Lecture lec : lectures) {
+            if (lec.getTeacher().equals(t)) {
+                if (lec.getPeriod().equals(p)) {
+                    return false;
+                }
+            }
+        }
+        /**
+         * The seventh restriction Lectures should not be given at a time when
+         * the teacher can not be present.
+         */
+        for (Period cant_be : t.getPeriods()) {
+            if (cant_be.equals(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<TimeProgram> getAllProgrm() {
+        List<TimeProgram> list = new ArrayList<>();
+        Lecture lecture = Lecture.All_Lectures.get(lectures.size());
+        int out = 0;
+        for (Period p : periods) {
+            Hall h = null;
+            /// first find palce then find teacher
+            for (Hall H : halls) {
+                /**
+                 * ThirdRestriction The third restriction The theoretical
+                 * lectures must be held in the stands and the process in the
+                 * halls can accommodate the number of students
+                 */
+                if ((lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && !H.getType().equals(Hall.Type.LAB))
+                        || !lecture.getTypeLecture().equals(TypeLecture.Practical_LAB) && H.getType().equals(Hall.Type.LAB)) {
+                    continue;
+                }
+
+                /// sixthRestriction Hall should be empty
+                if (!Hall_is_Empty(H, p)) {
+                    continue;
+                }
+                /// when find first good place close
+                h = H;
+                break;
+            }
+
+            for (Teacher t : teachers) {
+
+                /**
+                 * fourth restriction && seventh restriction
+                 */
+                if (!can_Give_Lecture(t, lecture, p)) {
+                    continue;
+                }
+                Lecture lec = new Lecture(lecture.getSubject(), lecture.getSpecializationName(), lecture.getTypeLecture(), lecture.getGroupNumber(), lecture.getCategoryNumber());
+                lec.setPeriod(new Period(p));
+                lec.setTeacher(new Teacher(t));
+                lec.setHall(new Hall(h));
+
+                TimeProgram newTimeProgram = new TimeProgram(this);
+                newTimeProgram.addLecture(new Lecture(lec));
+                if (newTimeProgram.checkSubRestrictionforSubProgram()) {
+                    list.add(newTimeProgram);
+                    /// when find first good  teacher close
+                    break;
+                }
+            }
+        }
+        System.out.println(list.size() + " : " + lectures.size() + " " + lecture.getSubject());
         return list;
     }
-    
+
     public void addLecture(Lecture lecture) {
         this.lectures.add(lecture);
     }
@@ -160,7 +241,7 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean thirdRestriction() {
-        
+
         return true;
     }
 
@@ -205,14 +286,23 @@ public class TimeProgram implements Cloneable {
                 }
                 Lecture L1 = lectures.get(i);
                 Lecture L2 = lectures.get(j);
-                if (L1.getSpecializationName().equals(L2.getSpecializationName())
-                        && L1.getTypeLecture().equals(L2.getTypeLecture())
-                        && L1.getGroupNumber() == L2.getGroupNumber()
-                        && L1.getCategoryNumber() == L2.getCategoryNumber()
-                        && L1.getPeriod().equals(L2.getPeriod())) {
-                    return false;
+                if (L1.getPeriod().equals(L2.getPeriod())) {
+                    if (L1.getSpecializationName().equals(L2.getSpecializationName())) {
+                        if (L1.getGroupNumber() == L2.getGroupNumber()) {
+                            return false;
+                        }
+                        if (L1.getCategoryNumber() == L2.getCategoryNumber()) {
+                            return false;
+                        }
+                        if (L1.getTypeLecture().equals(L2.getTypeLecture()) && L1.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                            return false;
+                        }
+
+                    }
                 }
+
             }
+
         }
         return true;
     }
@@ -262,19 +352,19 @@ public class TimeProgram implements Cloneable {
 //        }
         return true;
     }
-    
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 41 * hash + Objects.hashCode(this.lectures);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -292,10 +382,10 @@ public class TimeProgram implements Cloneable {
         }
         return true;
     }
-    
+
     public void printProgram() {
         System.out.println("*************** Final Program ******************");
-        
+
         Lecture[][] lec = new Lecture[6][5];
         Boolean[][] bo = new Boolean[6][5];
         for (int i = 1; i <= 5; i++) {
@@ -317,17 +407,17 @@ public class TimeProgram implements Cloneable {
             }
         }
         System.out.println("*************************************************");
-        
+
     }
-    
+
     public List<Lecture> getLectures() {
         return lectures;
     }
-    
+
     public void setLectures(List<Lecture> lectures) {
         this.lectures = lectures;
     }
-    
+
     public boolean canAddLecture(Lecture u, Period period) {
         u.setPeriod(period);
         addLecture(u);
@@ -335,9 +425,12 @@ public class TimeProgram implements Cloneable {
             this.lectures.remove(u);
             return true;
         }
-        
+
         this.lectures.remove(u);
         return false;
     }
+
+    
+    
     
 }
