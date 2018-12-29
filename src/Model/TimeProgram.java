@@ -112,6 +112,7 @@ public class TimeProgram implements Cloneable {
         Lecture lecture = Lecture.All_Lectures.get(lectures.size());
         int out = 0;
         for (Period p : periods) {
+            
             Hall h = null;
             /// first find palce then find teacher
             for (Hall H : halls) {
@@ -154,7 +155,7 @@ public class TimeProgram implements Cloneable {
                 if (newTimeProgram.checkSubRestrictionforSubProgram()) {
                     list.add(newTimeProgram);
                     /// when find first good  teacher close
-                    ///   break;
+                       break;
                 }
             }
         }
@@ -604,7 +605,7 @@ public class TimeProgram implements Cloneable {
         int ans = 0;
         for (Lecture lc : lectures) {
             if (!Cheack_If_teacher_Love_period(lc.getTeacher(), lc.getPeriod())) {
-                ans += 100;
+                ans += 1000;
             }
         }
         return ans;
@@ -787,7 +788,11 @@ public class TimeProgram implements Cloneable {
         }
         return 0;
     }
-
+    public int Horistic()
+    {
+        int rem = Lecture.All_Lectures.size() - lectures.size();
+        return (int)Math.pow(2, rem/2+3);
+    }
     public int Get_all_cost()
     {
         int ans = 0;
@@ -800,6 +805,8 @@ public class TimeProgram implements Cloneable {
         ans+=seventhWeakConstraints();
         ans+=EighthWeakConstraints();
         ans+=NinthWeakConstraints();
+        ans+=Horistic();
+        
         return ans;
     }
 }

@@ -42,18 +42,33 @@ public class BFS {
         };
         PriorityQueue<TimeProgram> queue  = new PriorityQueue<>(comparator);
         HashSet<Integer> hashSet = new HashSet<>();
-
+        TimeProgram best = null;
+        
         queue.add(grid);
         hashSet.add(grid.hashCode());
         
         while (!queue.isEmpty()) {
-           
+            if(this.NumberOfProgram > 10000)
+            {
+                if(best != null)
+                {
+                    return best;
+                }
+            }
             this.NumberOfProgram++;
-            
-
             TimeProgram cur = queue.poll();
-            if (cur.isFinal() && cur.Get_all_cost() < 5000) {
-                return cur;
+            System.out.println(cur.Get_all_cost()+" ");
+            if (cur.isFinal()) {
+                if(best == null)
+                    best = cur;
+                else
+                {
+                    if(best.Get_all_cost() > cur.Get_all_cost())
+                    {
+                        best = cur;
+                    }
+                }
+           ///     return cur;
             }
             
             List<TimeProgram> AllMoves = cur.getAllProgrm();
@@ -62,6 +77,7 @@ public class BFS {
                     continue;
                 }
                 hashSet.add(u.hashCode());
+                if(queue.size() < 1000)
                 queue.add(u);
             }
         }
