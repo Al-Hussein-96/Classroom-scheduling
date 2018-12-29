@@ -29,21 +29,6 @@ public class University {
         halls.add(new Hall("2", THEATER));
         halls.add(new Hall("3", THEATER));
         halls.add(new Hall("4", THEATER));
-        halls.add(new Hall("5", THEATER));
-        halls.add(new Hall("12", THEATER));
-        halls.add(new Hall("14", THEATER));
-        halls.add(new Hall("16", THEATER));
-        halls.add(new Hall("21", THEATER));
-        halls.add(new Hall("22", THEATER));
-        halls.add(new Hall("23", THEATER));
-        halls.add(new Hall("25", THEATER));
-
-        halls.add(new Hall("1A", LAB));
-        halls.add(new Hall("1B", LAB));
-        halls.add(new Hall("1C", LAB));
-        halls.add(new Hall("1D", LAB));
-        halls.add(new Hall("1E", LAB));
-        halls.add(new Hall("1F", LAB));
 
         halls.add(new Hall("2A", LAB));
         halls.add(new Hall("2B", LAB));
@@ -51,12 +36,10 @@ public class University {
         halls.add(new Hall("2D", LAB));
         halls.add(new Hall("2E", LAB));
         halls.add(new Hall("2F", LAB));
-        halls.add(new Hall("2G", LAB));
-        halls.add(new Hall("2H", LAB));
-        halls.add(new Hall("2I", LAB));
-        halls.add(new Hall("2J", LAB));
-        halls.add(new Hall("2K", LAB));
-        halls.add(new Hall("2L", LAB));
+//        halls.add(new Hall("2G", LAB));
+//        halls.add(new Hall("2H", LAB));
+//        halls.add(new Hall("2I", LAB));
+//        halls.add(new Hall("2J", LAB));
 
         subjects.add(new Subject(SubjectName.ALGO, 1, 1, 0, true, true, true));
         subjects.add(new Subject(SubjectName.COMPILER_AI, 1, 0, 1, true, false, false));
@@ -416,29 +399,7 @@ public class University {
         list3.add(SpecializationName.Networks);
         teachers.add(new Teacher(TeacherName.Ahmed_Touhan, list1, p, list2, list3));
         
-//        teachers.add(new Teacher(TeacherName.H, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.I, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.J, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.K, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.L, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.M, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.N, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.O, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.P, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.Q, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.R, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.S, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.T, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.U, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.V, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.W, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.X, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.Y, subjectNames, p, typeLectures, specializationNames));
-//        teachers.add(new Teacher(TeacherName.Z, subjectNames, p, typeLectures, specializationNames));
-        /**
-         * ********************** End Add Teacher
-         * **********************************
-         */
+
 
     }
 

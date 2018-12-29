@@ -11,8 +11,16 @@ import static Model.University.periods;
 import static Model.University.subjects;
 import static Model.University.teachers;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +43,6 @@ public class TimeProgram implements Cloneable {
     }
 
     /// this fuction to Now if teacher Can give Lector
-
     public boolean can_Give_Lecture(Teacher t, Lecture lecture, Period p) {
         SubjectName subject = lecture.getSubject();
         SpecializationName specializationName = lecture.getSpecializationName();
@@ -254,19 +261,19 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean fourthRestriction() {
-//        for (int i = 0; i < lectures.size(); i++) {
-//            for (int j = 0; j < lectures.size(); j++) {
-//                if (i == j) {
-//                    continue;
-//                }
-//                Lecture L1 = lectures.get(i);
-//                Lecture L2 = lectures.get(j);
-//                if (L1.getTeacher().getName().equals(L2.getTeacher().getName())
-//                        && L1.getPeriod().equals(L2.getPeriod())) {
-//                    return false;
-//                }
-//            }
-//        }
+        for (int i = 0; i < lectures.size(); i++) {
+            for (int j = 0; j < lectures.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+                Lecture L1 = lectures.get(i);
+                Lecture L2 = lectures.get(j);
+                if (L1.getTeacher().getName().equals(L2.getTeacher().getName())
+                        && L1.getPeriod().equals(L2.getPeriod())) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -287,26 +294,21 @@ public class TimeProgram implements Cloneable {
                 Lecture L1 = lectures.get(i);
                 Lecture L2 = lectures.get(j);
                 if (L1.getPeriod().equals(L2.getPeriod())) {
-                    if(L1.getSpecializationName().equals(L2.getSpecializationName()))
-                    {
-                        if(cheack_if_one_lecture_inside_other(L1,L2))
+                    if (L1.getSpecializationName().equals(L2.getSpecializationName())) {
+                        if (cheack_if_one_lecture_inside_other(L1, L2)) {
                             return false;
-                        if(cheack_if_one_lecture_inside_other(L2,L1))
-                           return false;
-                    }
-                    else
-                    {
-                        if(L1.getTypeLecture().equals(TypeLecture.Theoretical))
-                        {
-                            if(checkCommonTwoSpec(L1.getSpecializationName() , L2.getSpecializationName(),L1.getSubject()))
-                            {
+                        }
+                        if (cheack_if_one_lecture_inside_other(L2, L1)) {
+                            return false;
+                        }
+                    } else {
+                        if (L1.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                            if (checkCommonTwoSpec(L1.getSpecializationName(), L2.getSpecializationName(), L1.getSubject())) {
                                 return false;
                             }
                         }
-                        if(L2.getTypeLecture().equals(TypeLecture.Theoretical))
-                        {
-                            if(checkCommonTwoSpec(L2.getSpecializationName() , L1.getSpecializationName(),L2.getSubject()))
-                            {
+                        if (L2.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                            if (checkCommonTwoSpec(L2.getSpecializationName(), L1.getSpecializationName(), L2.getSubject())) {
                                 return false;
                             }
                         }
@@ -319,7 +321,7 @@ public class TimeProgram implements Cloneable {
         return true;
     }
 
-   public boolean checkCommonTwoSpec(SpecializationName sp1, SpecializationName sp2, SubjectName name) {
+    public boolean checkCommonTwoSpec(SpecializationName sp1, SpecializationName sp2, SubjectName name) {
         for (Subject s : subjects) {
             if (s.getName().equals(name)) {
                 SpecializationName s1 = null, s2 = null, s3 = null;
@@ -332,78 +334,71 @@ public class TimeProgram implements Cloneable {
                 if (s.isN()) {
                     s3 = SpecializationName.Networks;
                 }
- 
+
                 boolean ok1 = sp1.equals(s1) || sp1.equals(s2) || sp1.equals(s3);
                 boolean ok2 = sp2.equals(s1) || sp2.equals(s2) || sp2.equals(s3);
- 
+
                 return ok1 && ok2;
- 
+
             }
         }
         return false;
- 
+
     }
-    public boolean cheack_if_one_lecture_inside_other(Lecture L1 , Lecture L2)
-    {
+
+    public boolean cheack_if_one_lecture_inside_other(Lecture L1, Lecture L2) {
         TypeLecture Type1 = L1.getTypeLecture();
         TypeLecture Type2 = L2.getTypeLecture();
-        if(Type1.equals(TypeLecture.Theoretical))
-        {
+        if (Type1.equals(TypeLecture.Theoretical)) {
             return true;
         }
-        if(Type2.equals(TypeLecture.Theoretical))
-        {
+        if (Type2.equals(TypeLecture.Theoretical)) {
             return true;
         }
-        if(Type1.equals(Type2))
-        {
-            if(Type1.equals(TypeLecture.Practical_LAB))
-            {
-                if(L1.getCategoryNumber() == L2.getCategoryNumber())
+        if (Type1.equals(Type2)) {
+            if (Type1.equals(TypeLecture.Practical_LAB)) {
+                if (L1.getCategoryNumber() == L2.getCategoryNumber()) {
                     return true;
+                }
             }
-            
-            if(Type1.equals(TypeLecture.Practical_THEATER))
-            {
-                if(L1.getGroupNumber()== L2.getGroupNumber())
+
+            if (Type1.equals(TypeLecture.Practical_THEATER)) {
+                if (L1.getGroupNumber() == L2.getGroupNumber()) {
                     return true;
+                }
             }
-        }
-        else 
-        {
+        } else {
             SpecializationName sp1 = L1.getSpecializationName();
             int Number_of_Group = 0;
             int Number_of_Category = 0;
-            for(Specialization sp : Specializations)
-            {
-                if(sp.getName().equals(sp1))
-                {
+            for (Specialization sp : Specializations) {
+                if (sp.getName().equals(sp1)) {
                     Number_of_Category = sp.getNumCategory();
                     Number_of_Group = sp.getNumGroup();
                 }
             }
-            int Start_Category = 0 ;
+            int Start_Category = 0;
             int End_Category = 0;
-            int x = (Number_of_Category+Number_of_Group-1)/Number_of_Group;
-            
-            if(Type1.equals(TypeLecture.Practical_LAB))
-            {
-                Start_Category = L2.getCategoryNumber()*(x-1)+1;
-                End_Category = Start_Category+x-1;
-                if(L2.getCategoryNumber() >= Start_Category && L2.getCategoryNumber() <= End_Category)
+            int x = (Number_of_Category + Number_of_Group - 1) / Number_of_Group;
+
+            if (Type1.equals(TypeLecture.Practical_LAB)) {
+                Start_Category = L2.getCategoryNumber() * (x - 1) + 1;
+                End_Category = Start_Category + x - 1;
+                if (L2.getCategoryNumber() >= Start_Category && L2.getCategoryNumber() <= End_Category) {
                     return true;
-            }
-            else 
-            {
-                 Start_Category = L2.getCategoryNumber()*(x-1)+1;
-                 End_Category = Start_Category+x-1;
-                 if(L1.getCategoryNumber() >= Start_Category && L1.getCategoryNumber() <= End_Category)
+                }
+            } else {
+                Start_Category = L2.getCategoryNumber() * (x - 1) + 1;
+                End_Category = Start_Category + x - 1;
+                if (L1.getCategoryNumber() >= Start_Category && L1.getCategoryNumber() <= End_Category) {
                     return true;
+                }
             }
-            
+
         }
         return false;
     }
+
     /**
      * The sixth restriction
      * <p>
@@ -439,14 +434,14 @@ public class TimeProgram implements Cloneable {
      * @return true if the restriction accepted else false
      */
     public boolean seventhRestriction() {
-//        for (Lecture L : lectures) {
-//            Teacher t = L.getTeacher();
-//            for (Period p : L.getPeriods()) {
-//                if (L.getPeriod().equals(p)) {
-//                    return false;
-//                }
-//            }
-//        }
+        for (Lecture L : lectures) {
+            Teacher t = L.getTeacher();
+            for (Period p : t.getPeriods()) {
+                if (L.getPeriod().equals(p)) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -527,7 +522,124 @@ public class TimeProgram implements Cloneable {
         return false;
     }
 
-    
-    
-    
+    public boolean isSameStudents(Lecture L1, Lecture L2) {
+
+        if (L1.getSpecializationName().equals(L2.getSpecializationName())) {
+            if (cheack_if_one_lecture_inside_other(L1, L2)) {
+                return false;
+            }
+            if (cheack_if_one_lecture_inside_other(L2, L1)) {
+                return false;
+            }
+        } else {
+            if (L1.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                if (checkCommonTwoSpec(L1.getSpecializationName(), L2.getSpecializationName(), L1.getSubject())) {
+                    return false;
+                }
+            }
+            if (L2.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                if (checkCommonTwoSpec(L2.getSpecializationName(), L1.getSpecializationName(), L2.getSubject())) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    public int firstWeakConstraints() {
+        int sum = 0;
+        for (int i = 1; i <= 5; i++) {
+            List<Lecture> list = new ArrayList<>();
+            for (Lecture u : getLectures()) {
+                if (u.getPeriod().getDay() == i) {
+                    list.add(u);
+                }
+            }
+            Collections.sort(list, (Lecture o1, Lecture o2) -> {
+                if (o1.getPeriod().getTime() < o2.getPeriod().getTime()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+
+            for (int j = 0; j < list.size(); j++) {
+                for (int k = j + 1; j < list.size(); k++) {
+                    if (list.get(j).getTeacher().equals(list.get(k).getTeacher())) {
+                        sum += (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
+                        break;
+                    }
+                }
+            }
+
+            for (int j = 0; j < list.size(); j++) {
+                for (int k = j + 1; j < list.size(); k++) {
+                    Lecture l1 = list.get(j);
+                    Lecture l2 = list.get(k);
+
+                    if (!isSameStudents(l1, l2)) {
+                        sum += (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
+                        break;
+                    }
+                }
+            }
+
+        }
+        return sum;
+    }
+
+    public boolean Cheack_If_teacher_Love_period(Teacher t, Period p) {
+        for (Period p1 : t.getPeriodsLove()) {
+            if (p1.equals(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int TwoWeakConstraints() {
+        int ans = 0;
+        for (Lecture lc : lectures) {
+            if (!Cheack_If_teacher_Love_period(lc.getTeacher(), lc.getPeriod())) {
+                ans += 100;
+            }
+        }
+        return ans;
+    }
+
+    private Teacher getTeacherFromName(TeacherName teacherName) {
+        for (Teacher u : teachers) {
+            if (u.getName().equals(teacherName)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public int ThirdWeakConstraints() {
+        int sum = 0;
+        Map<TeacherName, Integer> my = new HashMap<>();
+        for (Lecture u : lectures) {
+            int cnt = 0;
+            if (my.containsKey(u.getTeacher().getName())) {
+                cnt = my.get(u.getTeacher().getName());
+            }
+            my.put(u.getTeacher().getName(), cnt);
+        }
+        for (TeacherName name : my.keySet()) {
+            Teacher t = getTeacherFromName(name);
+            if (t.getMyNumberLecture() > my.get(name)) {
+                sum += 100;
+            }
+        }
+        return sum;
+    }
+
+    public int FourthWeakConstraints() {
+        
+        return 0;
+    }
+
 }

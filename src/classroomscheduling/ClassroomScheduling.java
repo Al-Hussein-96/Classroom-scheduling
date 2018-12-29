@@ -41,17 +41,17 @@ public class ClassroomScheduling extends Application {
 
         Lecture l = new Lecture();
 
-
 //        List<Lecture> lectures = Lecture.All_Lectures;
 //        for (Lecture lecture : lectures) {
 //            lecture.printLecture();
 //        }
         BFS algorithm = new BFS(new TimeProgram());
         TimeProgram t = algorithm.Solve();
-        
-        System.out.println("Size: " + t.getLectures().size());
-        for(Lecture u:t.getLectures())
+
+      //  System.out.println("Size: " + t.getLectures().size());
+        for (Lecture u : t.getLectures()) {
             u.printLecture();
+        }
         //t.printProgram();
         System.out.println("Finish");
 //        if(t!=null)t.printProgram();

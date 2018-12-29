@@ -20,8 +20,12 @@ public class Teacher implements Cloneable {
     private int MaximumLecture;
     private int MaximumDay;
     private List<Period> periods; /// the time that teather cannot found in university
+    private List<Period> periodsLove; /// the time that teacher love to give lecture
     private List<TypeLecture> typeLectures;
     private List<SpecializationName> specializationNames;
+    
+    private int MyNumberDay;
+    private int MyNumberLecture;
 
     public Teacher() {
     }
@@ -31,6 +35,7 @@ public class Teacher implements Cloneable {
         periods = new ArrayList<>();
         typeLectures = new ArrayList<>();
         specializationNames = new ArrayList<>();
+        periodsLove = new ArrayList<>();
 
         this.Name = T.Name;
         for (SubjectName SN : T.subjectNames) {
@@ -126,6 +131,34 @@ public class Teacher implements Cloneable {
     public void setSpecializationNames(List<SpecializationName> specializationNames) {
         this.specializationNames = specializationNames;
     }
+
+    public List<Period> getPeriodsLove() {
+        return periodsLove;
+    }
+
+    public void setPeriodsLove(List<Period> periodsLove) {
+        this.periodsLove = periodsLove;
+    }
+
+    public int getMyNumberDay() {
+        return MyNumberDay;
+    }
+
+    public void setMyNumberDay(int MyNumberDay) {
+        this.MyNumberDay = MyNumberDay;
+    }
+
+    public int getMyNumberLecture() {
+        return MyNumberLecture;
+    }
+
+    public void setMyNumberLecture(int MyNumberLecture) {
+        this.MyNumberLecture = MyNumberLecture;
+    }
+    
+    
+    
+    
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
