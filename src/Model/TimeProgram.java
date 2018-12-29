@@ -563,7 +563,7 @@ public class TimeProgram implements Cloneable {
             });
 
             for (int j = 0; j < list.size(); j++) {
-                for (int k = j + 1; j < list.size(); k++) {
+                for (int k = j + 1; k < list.size(); k++) {
                     if (list.get(j).getTeacher().equals(list.get(k).getTeacher())) {
                         sum += (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
                         break;
@@ -572,7 +572,7 @@ public class TimeProgram implements Cloneable {
             }
 
             for (int j = 0; j < list.size(); j++) {
-                for (int k = j + 1; j < list.size(); k++) {
+                for (int k = j + 1; k < list.size(); k++) {
                     Lecture l1 = list.get(j);
                     Lecture l2 = list.get(k);
 
@@ -784,4 +784,18 @@ public class TimeProgram implements Cloneable {
         return 0;
     }
 
+    public int Get_all_cost()
+    {
+        int ans = 0;
+        ans+=firstWeakConstraints();
+        ans+=TwoWeakConstraints();
+        ans+=ThirdWeakConstraints();
+        ans+=FourthWeakConstraints();
+        ans+=FifthWeakConstraints();
+        ans+=sixthWeakConstraints();
+        ans+=seventhWeakConstraints();
+        ans+=EighthWeakConstraints();
+        ans+=NinthWeakConstraints();
+        return ans;
+    }
 }

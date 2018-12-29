@@ -38,12 +38,11 @@ public class BFS {
             
 
             TimeProgram cur = stack.pop();
-            if (cur.isFinal()) {
+            if (cur.isFinal() && cur.Get_all_cost() < 5000) {
                 return cur;
             }
             
             List<TimeProgram> AllMoves = cur.getAllProgrm();
-//            System.out.println("Size list in BFS = " +AllMoves.size() +"  size list inside it = " + AllMoves.get(0).getLectures().size());
             for (TimeProgram u : AllMoves) {
                 if (hashSet.contains(u.hashCode())) {
                     continue;

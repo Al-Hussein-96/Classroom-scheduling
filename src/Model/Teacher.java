@@ -62,6 +62,17 @@ public class Teacher implements Cloneable {
         this.specializationNames = specializationNames;
     }
 
+     public Teacher(TeacherName Name, List<SubjectName> subjectNames, List<Period> periods, List<TypeLecture> typeLectures, List<SpecializationName> specializationNames ,
+             List < Period >  periodsLove  , int MaximumLecture , int MaximumDay) {
+        this.Name = Name;
+        this.subjectNames = subjectNames;
+        this.periods = periods;
+        this.typeLectures = typeLectures;
+        this.specializationNames = specializationNames;
+        this.MaximumDay = MaximumDay;
+        this.MaximumLecture = MaximumLecture;
+        this.periodsLove = periodsLove;
+    }
     public Teacher(TeacherName Name, List<SubjectName> subjectNames, List<Period> periods) {
         this.Name = Name;
         this.subjectNames = subjectNames;

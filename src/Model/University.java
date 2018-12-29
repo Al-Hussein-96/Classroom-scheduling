@@ -2,6 +2,7 @@ package Model;
 
 import static Model.Hall.Type.LAB;
 import static Model.Hall.Type.THEATER;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,10 @@ public class University {
         specializationNames.add(SpecializationName.Artificial_Intelligence);
 
         List<Period> p = new ArrayList<>();
+//        for(int i=1;i<=4;i++)
+//        {
+//            p.add(new Period(5,i));
+//        }
 
         /**
          * ********************** Add Teacher
@@ -114,14 +119,19 @@ public class University {
         List<SpecializationName> list3 = new ArrayList<>();
 
         /// first Teacher
+        List<Period> Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(1, i));
+        }
         list1.add(SubjectName.SOFTWARE_AI_N);
         list2.add(TypeLecture.Theoretical);
-
+        
         list3.add(SpecializationName.Networks);
         list3.add(SpecializationName.Artificial_Intelligence);
-
-        teachers.add(new Teacher(TeacherName.Mohamad_alahmad, list1, p, list2, list3));
-
+        
+        teachers.add(new Teacher(TeacherName.Mohamad_alahmad, list1, p, list2, list3 , Love_Period ,2,1) );
+        
         /// Second Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.ALGO);
@@ -129,8 +139,14 @@ public class University {
 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Theoretical);
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(2, i));
+        }
 
-        teachers.add(new Teacher(TeacherName.Basel_alkhateb, list1, p, list2, specializationNames));
+        teachers.add(new Teacher(TeacherName.Basel_alkhateb, list1, p, list2, specializationNames , Love_Period , 2 , 1));
 
         /// Third Teacher
         list1 = new ArrayList<>();
@@ -142,8 +158,13 @@ public class University {
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
         list3.add(SpecializationName.Artificial_Intelligence);
-
-        teachers.add(new Teacher(TeacherName.Nawras_watfa, list1, p, list2, specializationNames));
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(1, i));
+        }
+        teachers.add(new Teacher(TeacherName.Nawras_watfa, list1, p, list2, specializationNames , Love_Period , 2 , 1));
 
         /// Fourth Teacher
         list1 = new ArrayList<>();
@@ -154,8 +175,13 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-
-        teachers.add(new Teacher(TeacherName.Maysa_abo_kasem, list1, p, list2, list3));
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(4, i));
+        }
+        teachers.add(new Teacher(TeacherName.Maysa_abo_kasem, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// fifth Teacher
         list1 = new ArrayList<>();
@@ -163,8 +189,14 @@ public class University {
 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Theoretical);
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(4, i));
+        }
 
-        teachers.add(new Teacher(TeacherName.Waseem_ahmad, list1, p, list2, specializationNames));
+        teachers.add(new Teacher(TeacherName.Waseem_ahmad, list1, p, list2, specializationNames ,Love_Period,2 , 1));
 
         /// sixth Teacher
         list1 = new ArrayList<>();
@@ -175,8 +207,14 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-
-        teachers.add(new Teacher(TeacherName.Ammar_Jokhdar, list1, p, list2, list3));
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(4, i));
+        }
+        
+        teachers.add(new Teacher(TeacherName.Ammar_Jokhdar, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// seventh Teacher
         list1 = new ArrayList<>();
@@ -187,8 +225,14 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(4, i));
+        }
 
-        teachers.add(new Teacher(TeacherName.Madeleine_Abboud, list1, p, list2, list3));
+        teachers.add(new Teacher(TeacherName.Madeleine_Abboud, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// 8 Teacher
         list1 = new ArrayList<>();
@@ -199,8 +243,14 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-
-        teachers.add(new Teacher(TeacherName.Salah_aldohji, list1, p, list2, list3));
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(2, i));
+        }
+        
+        teachers.add(new Teacher(TeacherName.Salah_aldohji, list1, p, list2, list3 , Love_Period , 1 , 1));
 
         /// 9 Teacher
         list1 = new ArrayList<>();
@@ -211,8 +261,14 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(1, i));
+        }
 
-        teachers.add(new Teacher(TeacherName.Saeed_abotrab, list1, p, list2, list3));
+        teachers.add(new Teacher(TeacherName.Saeed_abotrab, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// 10 Teacher
         list1 = new ArrayList<>();
@@ -223,7 +279,18 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Omar_Ibrahim, list1, p, list2, list3));
+        
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(4, i));
+        }
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(2, i));
+        }
+        teachers.add(new Teacher(TeacherName.Omar_Ibrahim, list1, p, list2, list3,Love_Period , 1 , 1));
 
         /// 11 Teacher
         list1 = new ArrayList<>();
@@ -234,7 +301,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Mohamed_Sheikha, list1, p, list2, list3));
+         Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(2, i));
+        }
+        teachers.add(new Teacher(TeacherName.Mohamed_Sheikha, list1, p, list2, list3 , Love_Period , 1 , 1));
 
         /// 12 Teacher
         list1 = new ArrayList<>();
@@ -245,7 +317,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Maher_Alsarem, list1, p, list2, list3));
+         Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Maher_Alsarem, list1, p, list2, list3 ,Love_Period ,2 , 1));
 
         /// 13 Teacher
         list1 = new ArrayList<>();
@@ -256,7 +333,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Bushra_Dawood, list1, p, list2, list3));
+         Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Bushra_Dawood, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// 14 Teacher
         list1 = new ArrayList<>();
@@ -267,7 +349,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Ahmed_El_Hassan, list1, p, list2, list3));
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Ahmed_El_Hassan, list1, p, list2, list3 , Love_Period , 3 , 1));
 
         /// 15 Teacher
         list1 = new ArrayList<>();
@@ -278,7 +365,28 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Rawan_karaone, list1, p, list2, list3));
+         Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Rawan_karaone, list1, p, list2, list3 , Love_Period , 2 , 1));
+        
+        /// C Teacher
+        list1 = new ArrayList<>();
+        list1.add(SubjectName.DATABASE_SE);
+
+        list2 = new ArrayList<>();
+        list2.add(TypeLecture.Practical_LAB);
+
+        list3 = new ArrayList<>();
+        list3.add(SpecializationName.Software_Engineering);
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.C, list1, p, list2, list3 , Love_Period , 2 , 1));
 
         /// 16 Teacher
         list1 = new ArrayList<>();
@@ -289,7 +397,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Safa_Kiwan, list1, p, list2, list3));
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Safa_Kiwan, list1, p, list2, list3 , Love_Period , 4 , 1));
 
         /// 17 Teacher
         list1 = new ArrayList<>();
@@ -300,7 +413,12 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Software_Engineering);
-        teachers.add(new Teacher(TeacherName.Islam_Kahilan, list1, p, list2, list3));
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Islam_Kahilan, list1, p, list2, list3 , Love_Period , 4 , 1));
 
         /// 18 Teacher
         list1 = new ArrayList<>();
@@ -311,107 +429,158 @@ public class University {
 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-        teachers.add(new Teacher(TeacherName.Zena_Dallal, list1, p, list2, list3));
+        Love_Period = new ArrayList<>();
+        for(int i=1;i<=4;i++)
+        {
+            Love_Period.add(new Period(3, i));
+        }
+        teachers.add(new Teacher(TeacherName.Zena_Dallal, list1, p, list2, list3 , Love_Period , 3 , 1));
 
         /// 19 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.COMPILER_AI);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_THEATER);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-        teachers.add(new Teacher(TeacherName.Ammar_Al_Nahas, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(2, 1));
+        Love_Period.add(new Period(2, 2));
+        Love_Period.add(new Period(2, 3));
+        Love_Period.add(new Period(2, 4));
+        teachers.add(new Teacher(TeacherName.Ammar_Al_Nahas, list1, p, list2, list3,Love_Period,2,1));
+ 
         /// 20 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.SOFTWARE_AI_N);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_THEATER);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-        teachers.add(new Teacher(TeacherName.Lujain_Harmelani, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(2, 1));
+        Love_Period.add(new Period(2, 2));
+        Love_Period.add(new Period(2, 3));
+        Love_Period.add(new Period(2, 4));
+        teachers.add(new Teacher(TeacherName.Lujain_Harmelani, list1, p, list2, list3,Love_Period,2,1));
+ 
         /// 21 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.NN_AI);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-        teachers.add(new Teacher(TeacherName.Nadia_Al_Bekaie, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(3, 1));
+        Love_Period.add(new Period(3, 2));
+        Love_Period.add(new Period(3, 3));
+        Love_Period.add(new Period(3, 4));
+        teachers.add(new Teacher(TeacherName.Nadia_Al_Bekaie, list1, p, list2, list3,Love_Period,3,1));
+ 
         /// 22 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.OPERATING_SYSTEM);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Artificial_Intelligence);
-        teachers.add(new Teacher(TeacherName.Anas_Hariri, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(3, 1));
+        Love_Period.add(new Period(3, 2));
+        Love_Period.add(new Period(3, 3));
+        Love_Period.add(new Period(3, 4));
+        teachers.add(new Teacher(TeacherName.Anas_Hariri, list1, p, list2, list3,Love_Period,3,1));
+ 
         /// 23 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.OPERATING_SYSTEM);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-        teachers.add(new Teacher(TeacherName.A, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(2, 1));
+        Love_Period.add(new Period(2, 2));
+        Love_Period.add(new Period(2, 3));
+        Love_Period.add(new Period(2, 4));
+        teachers.add(new Teacher(TeacherName.A, list1, p, list2, list3,Love_Period,3,1));
+ 
         /// 24 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.ALGO);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-        teachers.add(new Teacher(TeacherName.B, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(2, 1));
+        Love_Period.add(new Period(2, 2));
+        Love_Period.add(new Period(2, 3));
+        Love_Period.add(new Period(2, 4));
+        teachers.add(new Teacher(TeacherName.B, list1, p, list2, list3,Love_Period,3,1));
+ 
         /// 25 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.SOFTWARE_AI_N);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_THEATER);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-        teachers.add(new Teacher(TeacherName.Sawsan_AlHasan, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(4, 1));
+        Love_Period.add(new Period(4, 2));
+        Love_Period.add(new Period(4, 3));
+        Love_Period.add(new Period(4, 4));
+        teachers.add(new Teacher(TeacherName.Sawsan_AlHasan, list1, p, list2, list3,Love_Period,2,1));
+ 
         /// 26 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.AppNetworks_N);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-        teachers.add(new Teacher(TeacherName.Hassan_Dirwan, list1, p, list2, list3));
-
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(5, 1));
+        Love_Period.add(new Period(5, 2));
+        Love_Period.add(new Period(5, 3));
+        Love_Period.add(new Period(5, 4));
+        teachers.add(new Teacher(TeacherName.Hassan_Dirwan, list1, p, list2, list3,Love_Period,2,1));
+ 
         /// 27 Teacher
         list1 = new ArrayList<>();
         list1.add(SubjectName.AppNetworks_N);
-
+ 
         list2 = new ArrayList<>();
         list2.add(TypeLecture.Practical_LAB);
-
+ 
         list3 = new ArrayList<>();
         list3.add(SpecializationName.Networks);
-        teachers.add(new Teacher(TeacherName.Ahmed_Touhan, list1, p, list2, list3));
-
+ 
+        Love_Period = new ArrayList<>();
+        Love_Period.add(new Period(5, 1));
+        Love_Period.add(new Period(5, 2));
+        Love_Period.add(new Period(5, 3));
+        Love_Period.add(new Period(5, 4));
+        teachers.add(new Teacher(TeacherName.Ahmed_Touhan, list1, p, list2, list3, Love_Period, 2, 1));
+ 
     }
 
 }
