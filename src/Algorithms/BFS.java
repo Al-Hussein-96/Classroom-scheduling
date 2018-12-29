@@ -4,9 +4,11 @@ import Model.Lecture;
 import Model.Period;
 import Model.TimeProgram;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -26,18 +28,30 @@ public class BFS {
     }
 
         public TimeProgram Solve() {
-        Stack <TimeProgram> stack = new Stack();
+         Comparator<TimeProgram> comparator = (TimeProgram o1, TimeProgram o2) -> {
+
+            if (o1.Get_all_cost() < o2.Get_all_cost()) {
+                return -1;
+            }
+            if (o1.Get_all_cost() > o2.Get_all_cost()) {
+                return +1;
+            }
+            return 0;
+
+            // return cost.get(o1) - o2.getManhattanDistance();
+        };
+        PriorityQueue<TimeProgram> queue  = new PriorityQueue<>(comparator);
         HashSet<Integer> hashSet = new HashSet<>();
 
-        stack.add(grid);
+        queue.add(grid);
         hashSet.add(grid.hashCode());
         
-        while (!stack.isEmpty()) {
-           System.out.println(NumberOfProgram);
+        while (!queue.isEmpty()) {
+           
             this.NumberOfProgram++;
             
 
-            TimeProgram cur = stack.pop();
+            TimeProgram cur = queue.poll();
             if (cur.isFinal() && cur.Get_all_cost() < 5000) {
                 return cur;
             }
@@ -48,7 +62,7 @@ public class BFS {
                     continue;
                 }
                 hashSet.add(u.hashCode());
-                stack.add(u);
+                queue.add(u);
             }
         }
 

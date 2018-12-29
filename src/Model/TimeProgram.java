@@ -105,6 +105,10 @@ public class TimeProgram implements Cloneable {
 
     public List<TimeProgram> getAllProgrm() {
         List<TimeProgram> list = new ArrayList<>();
+        if(Lecture.All_Lectures.size() == lectures.size())
+        {
+            return list;
+        }
         Lecture lecture = Lecture.All_Lectures.get(lectures.size());
         int out = 0;
         for (Period p : periods) {
