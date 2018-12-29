@@ -141,7 +141,7 @@ public class TimeProgram implements Cloneable {
                 if (newTimeProgram.checkSubRestrictionforSubProgram()) {
                     list.add(newTimeProgram);
                     /// when find first good  teacher close
-                    break;
+                    ///   break;
                 }
             }
         }

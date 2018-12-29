@@ -13,7 +13,7 @@ public enum TeacherName implements Cloneable{
     //  نظري
     
     A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,
-    Salah_aldohji , Saeed_abotrab
+    Salah_aldohji , Saeed_abotrab 
     ,
     
     Mohamad_alahmad , Basel_alkhateb,
@@ -22,9 +22,17 @@ public enum TeacherName implements Cloneable{
     Madeleine_Abboud,
 
     /** prac */
-    Ammar_nahas,Lujain_Harmelani,
+    
+    Ammar_Al_Nahas,Lujain_Harmelani,
     Maher_Alsarem,Omar_Ibrahim,
     Rawan_Qarouni,Sawsan_AlHasan,
+    Mohamed_Sheikha , Bushra_Dawood
+    ,Ahmed_El_Hassan , Rawan_karaone
+    ,Safa_Kiwan , Islam_Kahilan, 
+    Zena_Dallal , Nadia_Al_Bekaie,
+    Anas_Hariri 
+   , Hassan_Dirwan 
+   ,Ahmed_Touhan
     ;
 
     
