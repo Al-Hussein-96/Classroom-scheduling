@@ -57,9 +57,28 @@ public class University {
                 periods.add(new Period(i, j));
             }
         }
-        Specializations.add(new Specialization(SpecializationName.Artificial_Intelligence, 2, 3));
-        Specializations.add(new Specialization(SpecializationName.Networks, 2, 3));
-        Specializations.add(new Specialization(SpecializationName.Software_Engineering, 2, 4));
+        Specialization sp1 = new Specialization(SpecializationName.Artificial_Intelligence, 2, 3);
+        Specializations.add(sp1);
+        int a[] ={0 , 1 , 2 };
+        int b[] ={0 , 2 , 3 };
+        sp1.setStart(a);
+        sp1.setEnd(b);
+        
+        Specialization sp2 = new Specialization(SpecializationName.Networks, 2, 3);
+        Specializations.add(sp2);
+        
+        int c[] ={0 , 1 , 2 };
+        int d[] ={0 , 2 , 3 };
+        sp2.setStart(c);
+        sp2.setEnd(d);
+        
+        Specialization sp3 = new Specialization(SpecializationName.Software_Engineering, 2, 4);
+        Specializations.add(sp3);
+        
+        int E[] ={0 , 1 , 3 };
+        int F[] ={0 , 2 , 4 };
+        sp3.setStart(E);
+        sp3.setEnd(F);
 
         List<SubjectName> subjectNames = new ArrayList<>();
         subjectNames.add(SubjectName.SOFTWARE_AI_N);

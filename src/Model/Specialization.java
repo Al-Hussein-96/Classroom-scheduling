@@ -14,11 +14,31 @@ public class Specialization implements Cloneable{
     private SpecializationName name;
     private int numGroup;
     private int numCategory;
-
+    private int [] start;
+    private int [] End;
     public Specialization(SpecializationName name, int numGroup, int numCategory) {
         this.name = name;
         this.numGroup = numGroup;
         this.numCategory = numCategory;
+        this.start = new int [numGroup+1];
+        this.End = new int [numGroup+1];
+       
+    }
+
+    public int getStart(int x) {
+        return start[x];
+    }
+
+    public void setStart(int[] start) {
+        this.start = start;
+    }
+
+    public int getEnd(int x) {
+        return End[x];
+    }
+
+    public void setEnd(int[] End) {
+        this.End = End;
     }
 
     public SpecializationName getName() {

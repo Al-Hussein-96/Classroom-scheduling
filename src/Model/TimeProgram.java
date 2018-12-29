@@ -368,33 +368,34 @@ public class TimeProgram implements Cloneable {
                 }
             }
         } else {
-            SpecializationName sp1 = L1.getSpecializationName();
-            int Number_of_Group = 0;
-            int Number_of_Category = 0;
-            for (Specialization sp : Specializations) {
-                if (sp.getName().equals(sp1)) {
-                    Number_of_Category = sp.getNumCategory();
-                    Number_of_Group = sp.getNumGroup();
-                }
+            int a=0 ; 
+            int b=0 ;
+            int x ,y;
+            if(Type1.equals(TypeLecture.Practical_LAB))
+            {
+               x = L1.getCategoryNumber();
+               y = L2.getGroupNumber();
             }
-            int Start_Category = 0;
-            int End_Category = 0;
-            int x = (Number_of_Category + Number_of_Group - 1) / Number_of_Group;
-
-            if (Type1.equals(TypeLecture.Practical_LAB)) {
-                Start_Category = L2.getCategoryNumber() * (x - 1) + 1;
-                End_Category = Start_Category + x - 1;
-                if (L2.getCategoryNumber() >= Start_Category && L2.getCategoryNumber() <= End_Category) {
-                    return true;
-                }
-            } else {
-                Start_Category = L2.getCategoryNumber() * (x - 1) + 1;
-                End_Category = Start_Category + x - 1;
-                if (L1.getCategoryNumber() >= Start_Category && L1.getCategoryNumber() <= End_Category) {
-                    return true;
-                }
+            else 
+            {
+                x = L2.getCategoryNumber();
+                y = L1.getGroupNumber();
             }
-
+            for(Specialization sp : Specializations)
+             {
+                  if(sp.getName().equals(L1.getSpecializationName()))
+                  {
+                      a = sp.getStart(y);
+                      b = sp.getEnd(y);
+                      
+                  }
+             }
+            
+            if(x >=a && x <= b)
+            {
+                return true;
+            }
+    
         }
         return false;
     }
