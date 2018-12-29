@@ -14,7 +14,17 @@ public class Subject implements Cloneable {
     private int NumPractical_THEATER;
     private boolean AI, SE, N;
 
-    public Subject(SubjectName name, int NumTheoretical, int NumPractical_LAB, int NumPractical_THEATER, boolean AI, boolean SE, boolean N) {
+    private int difficulty;
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Subject(SubjectName name, int NumTheoretical, int NumPractical_LAB, int NumPractical_THEATER, boolean AI, boolean SE, boolean N, int difficulty) {
         this.name = name;
         this.NumTheoretical = NumTheoretical;
         this.NumPractical_LAB = NumPractical_LAB;
@@ -22,6 +32,7 @@ public class Subject implements Cloneable {
         this.AI = AI;
         this.SE = SE;
         this.N = N;
+        this.difficulty = difficulty;
     }
 
     public SubjectName getName() {
@@ -87,14 +98,15 @@ public class Subject implements Cloneable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + Objects.hashCode(this.name);
-        hash = 19 * hash + this.NumTheoretical;
-        hash = 19 * hash + this.NumPractical_LAB;
-        hash = 19 * hash + this.NumPractical_THEATER;
-        hash = 19 * hash + (this.AI ? 1 : 0);
-        hash = 19 * hash + (this.SE ? 1 : 0);
-        hash = 19 * hash + (this.N ? 1 : 0);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + this.NumTheoretical;
+        hash = 71 * hash + this.NumPractical_LAB;
+        hash = 71 * hash + this.NumPractical_THEATER;
+        hash = 71 * hash + (this.AI ? 1 : 0);
+        hash = 71 * hash + (this.SE ? 1 : 0);
+        hash = 71 * hash + (this.N ? 1 : 0);
+        hash = 71 * hash + this.difficulty;
         return hash;
     }
 
@@ -128,11 +140,16 @@ public class Subject implements Cloneable {
         if (this.N != other.N) {
             return false;
         }
+        if (this.difficulty != other.difficulty) {
+            return false;
+        }
         if (this.name != other.name) {
             return false;
         }
         return true;
     }
+
+    
 
     /**
      * TODO

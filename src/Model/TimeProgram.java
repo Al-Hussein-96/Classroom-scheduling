@@ -129,7 +129,9 @@ public class TimeProgram implements Cloneable {
                 h = H;
                 break;
             }
-            if(h==null)continue;
+            if (h == null) {
+                continue;
+            }
             for (Teacher t : teachers) {
 
                 /**
@@ -368,34 +370,28 @@ public class TimeProgram implements Cloneable {
                 }
             }
         } else {
-            int a=0 ; 
-            int b=0 ;
-            int x ,y;
-            if(Type1.equals(TypeLecture.Practical_LAB))
-            {
-               x = L1.getCategoryNumber();
-               y = L2.getGroupNumber();
-            }
-            else 
-            {
+            int a = 0;
+            int b = 0;
+            int x, y;
+            if (Type1.equals(TypeLecture.Practical_LAB)) {
+                x = L1.getCategoryNumber();
+                y = L2.getGroupNumber();
+            } else {
                 x = L2.getCategoryNumber();
                 y = L1.getGroupNumber();
             }
-            for(Specialization sp : Specializations)
-             {
-                  if(sp.getName().equals(L1.getSpecializationName()))
-                  {
-                      a = sp.getStart(y);
-                      b = sp.getEnd(y);
-                      
-                  }
-             }
-            
-            if(x >=a && x <= b)
-            {
+            for (Specialization sp : Specializations) {
+                if (sp.getName().equals(L1.getSpecializationName())) {
+                    a = sp.getStart(y);
+                    b = sp.getEnd(y);
+
+                }
+            }
+
+            if (x >= a && x <= b) {
                 return true;
             }
-    
+
         }
         return false;
     }
@@ -639,7 +635,152 @@ public class TimeProgram implements Cloneable {
     }
 
     public int FourthWeakConstraints() {
-        
+
+        return 0;
+    }
+
+    public int FifthWeakConstraints() {
+        int sum = 0;
+        for (Specialization sp : Specializations) {
+            for (int i = 1; i <= sp.getNumCategory(); i++) {
+                for (int j = 1; j <= 5; j++) {
+                    int numLec = 0;
+                    for (Lecture L : lectures) {
+                        if (L.getSpecializationName().equals(sp.getName()) && L.getPeriod().getDay() == j) {
+                            if (L.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                                numLec++;
+                            } else if (L.getTypeLecture().equals(TypeLecture.Practical_THEATER)
+                                    && i >= sp.getStart(L.getGroupNumber()) && i <= sp.getEnd(L.getGroupNumber())) {
+                                numLec++;
+                            } else if (L.getTypeLecture().equals(TypeLecture.Practical_LAB) && i == L.getCategoryNumber()) {
+                                numLec++;
+                            }
+                        }
+                    }
+                    if (numLec > 3) {
+                        sum += 100;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int sixthWeakConstraints() {
+        int ans = 0;
+        for (Lecture lec : lectures) {
+            for (Lecture lec2 : lectures) {
+                if (lec.getSubject().equals(lec2.getSubject())) {
+                    boolean ok = TheoreticalLecture_After_PracticalLecture(lec, lec2);
+                    if (ok) {
+                        ans += 100;
+                    }
+                }
+
+            }
+        }
+        return ans;
+    }
+
+    public boolean TheoreticalLecture_After_PracticalLecture(Lecture lec1, Lecture lec2) {
+        if (lec1.getTypeLecture().equals(TypeLecture.Theoretical)) {
+            if (!lec2.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                Period p1 = lec1.getPeriod();
+                Period p2 = lec2.getPeriod();
+
+                if (PeriodA_greater_than_PeriodB(p1, p2)) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
+    public boolean PeriodA_greater_than_PeriodB(Period A, Period B) {
+        if (A.getDay() > B.getDay()) {
+            return true;
+        }
+        if (A.getDay() == B.getDay()) {
+            if (A.getTime() > B.getTime()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int seventhWeakConstraints() {
+        int ans = 0;
+        for (Specialization sp : Specializations) {
+            HashSet<Integer> hashSet = new HashSet<>();
+            for (Lecture lec : lectures) {
+                if (lec.getSpecializationName().equals(sp)) {
+                    if (!lec.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                        hashSet.add(lec.getPeriod().getDay());
+                    }
+                }
+            }
+            if (hashSet.size() > 4) {
+                ans += 100;
+            }
+        }
+        return ans;
+    }
+    
+    public int EighthWeakConstraints() {
+        int ans = 0;
+        for (Lecture lec : lectures) {
+
+            SubjectName sp1 = lec.getSubject();
+            int difficulty1 = 0;
+            for (Subject sp : subjects) {
+                if (sp.equals(sp1)) {
+                    difficulty1 = sp.getDifficulty();
+                }
+            }
+            if (difficulty1 > 5) {
+                int x = lec.getPeriod().getTime();
+                if(x > 2)
+                   ans += 100;
+            }
+
+        }
+
+        return ans;
+    }
+
+    public int NinthWeakConstraints() {
+        int sum = 0;
+        for (Specialization sp : Specializations) {
+            for (int i = 1; i <= sp.getNumCategory(); i++) {
+                int numDayWithoutLec = 0;
+
+                for (int j = 1; j <= 5; j++) {
+                    boolean bo = false;
+                    for (Lecture L : lectures) {
+                        if (L.getSpecializationName().equals(sp.getName()) && L.getPeriod().getDay() == j) {
+                            if (L.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                                bo = true;
+                                break;
+                            } else if (L.getTypeLecture().equals(TypeLecture.Practical_THEATER)
+                                    && i >= sp.getStart(L.getGroupNumber()) && i <= sp.getEnd(L.getGroupNumber())) {
+                                bo = true;
+                                break;
+                            } else if (L.getTypeLecture().equals(TypeLecture.Practical_LAB) && i == L.getCategoryNumber()) {
+                                bo = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!bo) {
+                        numDayWithoutLec++;
+                    }
+                }
+                if (numDayWithoutLec == 0) {
+                    sum += 100;
+                }
+            }
+        }
         return 0;
     }
 
