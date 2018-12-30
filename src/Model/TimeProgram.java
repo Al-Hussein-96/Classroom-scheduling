@@ -5,11 +5,12 @@
  */
 package Model;
 
-import static Model.University.Specializations;
-import static Model.University.halls;
-import static Model.University.periods;
-import static Model.University.subjects;
-import static Model.University.teachers;
+//import static Model.University.Specializations;
+//import static Model.University.halls;
+//import static Model.University.periods;
+//import static Model.University.subjects;
+//import static Model.University.teachers;
+import static Model.University.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 public class TimeProgram implements Cloneable {
 
     private List<Lecture> lectures = new ArrayList<>();
+    
 
     public TimeProgram() {
 
@@ -112,6 +114,21 @@ public class TimeProgram implements Cloneable {
         Lecture lecture = Lecture.All_Lectures.get(lectures.size());
         int out = 0;
         for (Period p : periods) {
+//            if(p.getDay() == 3)
+//            {
+//                if(lecture.getTypeLecture().equals(TypeLecture.Theoretical))
+//                {
+//                    continue;
+//                } 
+//            }
+//            if(p.getDay() == 5)
+//            {
+//                if(!lecture.getTypeLecture().equals(TypeLecture.Theoretical))
+//                {
+//                    continue;
+//                }
+//            }
+            
             
             Hall h = null;
             /// first find palce then find teacher
@@ -159,7 +176,7 @@ public class TimeProgram implements Cloneable {
                 }
             }
         }
-        System.out.println(list.size() + " : " + lectures.size() + " " + lecture.getSubject());
+        System.out.println(list.size() + " : " + lectures.size() + " " + lecture.getSubject() + " "+this.Get_all_cost());
         return list;
     }
 
@@ -444,6 +461,10 @@ public class TimeProgram implements Cloneable {
                 }
             }
         }
+        if(value_NinthWeakConstraints > 2)
+        {
+            return NinthWeakConstraints();
+        }
         return true;
     }
 
@@ -550,8 +571,8 @@ public class TimeProgram implements Cloneable {
 
     }
 
-    public int firstWeakConstraints() {
-        int sum = 0;
+    public boolean firstWeakConstraints() {
+        boolean sum = false;
         for (int i = 1; i <= 5; i++) {
             List<Lecture> list = new ArrayList<>();
             for (Lecture u : getLectures()) {
@@ -570,7 +591,7 @@ public class TimeProgram implements Cloneable {
             for (int j = 0; j < list.size(); j++) {
                 for (int k = j + 1; k < list.size(); k++) {
                     if (list.get(j).getTeacher().equals(list.get(k).getTeacher())) {
-                        sum += (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
+                        sum = true ; /// (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
                         break;
                     }
                 }
@@ -582,7 +603,7 @@ public class TimeProgram implements Cloneable {
                     Lecture l2 = list.get(k);
 
                     if (!isSameStudents(l1, l2)) {
-                        sum += (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
+                        sum = true; /// (list.get(k).getPeriod().getTime() - list.get(j).getPeriod().getTime() - 1) * 100;
                         break;
                     }
                 }
@@ -601,11 +622,11 @@ public class TimeProgram implements Cloneable {
         return false;
     }
 
-    public int TwoWeakConstraints() {
-        int ans = 0;
+    public boolean TwoWeakConstraints() {
+        boolean ans = false;
         for (Lecture lc : lectures) {
             if (!Cheack_If_teacher_Love_period(lc.getTeacher(), lc.getPeriod())) {
-                ans += 1000;
+                ans = true;
             }
         }
         return ans;
@@ -620,8 +641,8 @@ public class TimeProgram implements Cloneable {
         return null;
     }
 
-    public int ThirdWeakConstraints() {
-        int sum = 0;
+    public boolean ThirdWeakConstraints() {
+        boolean sum = false;
         Map<TeacherName, Integer> my = new HashMap<>();
         for (Lecture u : lectures) {
             int cnt = 0;
@@ -633,19 +654,19 @@ public class TimeProgram implements Cloneable {
         for (TeacherName name : my.keySet()) {
             Teacher t = getTeacherFromName(name);
             if (t.getMyNumberLecture() > my.get(name)) {
-                sum += 100;
+                sum = true;
             }
         }
         return sum;
     }
 
-    public int FourthWeakConstraints() {
+    public boolean FourthWeakConstraints() {
 
-        return 0;
+        return false;
     }
 
-    public int FifthWeakConstraints() {
-        int sum = 0;
+    public boolean FifthWeakConstraints() {
+        boolean sum = false;
         for (Specialization sp : Specializations) {
             for (int i = 1; i <= sp.getNumCategory(); i++) {
                 for (int j = 1; j <= 5; j++) {
@@ -663,22 +684,22 @@ public class TimeProgram implements Cloneable {
                         }
                     }
                     if (numLec > 3) {
-                        sum += 100;
+                        sum = true;
                     }
                 }
             }
         }
-        return 0;
+        return sum;
     }
 
-    public int sixthWeakConstraints() {
-        int ans = 0;
+    public boolean sixthWeakConstraints() {
+        boolean ans = false;
         for (Lecture lec : lectures) {
             for (Lecture lec2 : lectures) {
                 if (lec.getSubject().equals(lec2.getSubject())) {
                     boolean ok = TheoreticalLecture_After_PracticalLecture(lec, lec2);
                     if (ok) {
-                        ans += 100;
+                        ans = true;
                     }
                 }
 
@@ -714,8 +735,8 @@ public class TimeProgram implements Cloneable {
         return false;
     }
 
-    public int seventhWeakConstraints() {
-        int ans = 0;
+    public boolean seventhWeakConstraints() {
+        boolean ans = false;
         for (Specialization sp : Specializations) {
             HashSet<Integer> hashSet = new HashSet<>();
             for (Lecture lec : lectures) {
@@ -726,14 +747,14 @@ public class TimeProgram implements Cloneable {
                 }
             }
             if (hashSet.size() > 4) {
-                ans += 100;
+                ans = true;
             }
         }
         return ans;
     }
     
-    public int EighthWeakConstraints() {
-        int ans = 0;
+    public boolean EighthWeakConstraints() {
+        boolean ans = false;
         for (Lecture lec : lectures) {
 
             SubjectName sp1 = lec.getSubject();
@@ -746,7 +767,7 @@ public class TimeProgram implements Cloneable {
             if (difficulty1 > 5) {
                 int x = lec.getPeriod().getTime();
                 if(x > 2)
-                   ans += 100;
+                   ans = true;
             }
 
         }
@@ -754,7 +775,40 @@ public class TimeProgram implements Cloneable {
         return ans;
     }
 
-    public int NinthWeakConstraints() {
+    public boolean NinthWeakConstraints() {
+        int sum = 0;
+        for (Specialization sp : Specializations) {
+            boolean ok = true;
+            for (int i = 1; i <= sp.getNumCategory(); i++) {
+                int numDayWithoutLec = 0;
+
+                for (int j = 1; j <= 5; j++) {
+                    boolean bo = false;
+                    for (Lecture L : lectures) {
+                        if (L.getSpecializationName().equals(sp.getName()) && L.getPeriod().getDay() == j) {
+                            bo = true;
+                        }
+                    }
+                    if (!bo) {
+                        numDayWithoutLec++;
+                    }
+                }
+                if (numDayWithoutLec == 0) {
+                    ok = false;
+                }
+            }
+            if(ok)
+            {
+                sum++;
+            }
+        }
+       
+        if(sum >= 3)
+            return  true;
+        return false;
+    }
+    
+     public int get_number_Full_Day() {
         int sum = 0;
         for (Specialization sp : Specializations) {
             for (int i = 1; i <= sp.getNumCategory(); i++) {
@@ -781,32 +835,100 @@ public class TimeProgram implements Cloneable {
                         numDayWithoutLec++;
                     }
                 }
-                if (numDayWithoutLec == 0) {
-                    sum += 100;
-                }
+                sum+=(5-numDayWithoutLec);
+                
             }
         }
-        return 0;
+        return sum;
     }
+     public int get_number_of_Day_with_Practical()
+     {
+         /// Max_Value = 15;
+        int ans = 0;
+        for (Specialization sp : Specializations) {
+            HashSet<Integer> hashSet = new HashSet<>();
+            for (Lecture lec : lectures) {
+                if (lec.getSpecializationName().equals(sp)) {
+                    if (!lec.getTypeLecture().equals(TypeLecture.Theoretical)) {
+                        hashSet.add(lec.getPeriod().getDay());
+                    }
+                }
+            }
+            ans+=(5 - hashSet.size()); 
+        }
+        return ans;
+     }
+   
     public int Horistic()
     {
-        int rem = Lecture.All_Lectures.size() - lectures.size();
-        return (int)Math.pow(2, rem/2+3);
+        int x = Lecture.All_Lectures.size() - lectures.size() ; ///(
+        int y = get_number_Full_Day()+value_NinthWeakConstraints;
+        if(y > 30)
+        {
+            y = 30;
+        }
+     ///   int z = get_number_of_Day_with_Practical();
+        
+        
+        int ans = (int)Math.pow(2, (x+y)/3);
+        return ans;
     }
     public int Get_all_cost()
     {
         int ans = 0;
-        ans+=firstWeakConstraints();
-        ans+=TwoWeakConstraints();
-        ans+=ThirdWeakConstraints();
-        ans+=FourthWeakConstraints();
-        ans+=FifthWeakConstraints();
-        ans+=sixthWeakConstraints();
-        ans+=seventhWeakConstraints();
-        ans+=EighthWeakConstraints();
-        ans+=NinthWeakConstraints();
+        ans+=lectures.size();
+        if(firstWeakConstraints())
+        {
+            ans+=value_firstWeakConstraints*1000;
+        }
+        if(TwoWeakConstraints())
+        {
+            ans+=value_TwoWeakConstraints*1000;
+        }
+        if(ThirdWeakConstraints())
+        {
+            ans+=value_ThirdWeakConstraints*1000;
+        }
+        if(FourthWeakConstraints())
+        {
+            ans+=value_FourthWeakConstraints*1000;
+        }
+        if(FifthWeakConstraints())
+        {
+            ans+=value_FifthWeakConstraints*1000;
+        }
+        if(sixthWeakConstraints())
+        {
+            ans+=value_sixthWeakConstraints*1000;
+        }
+        if(seventhWeakConstraints())
+        {
+            ans+=value_seventhWeakConstraints*1000;
+        }
+        if(EighthWeakConstraints())
+        {
+            ans+=value_EighthWeakConstraints*1000;
+        }
+        if(NinthWeakConstraints())
+        {
+            ans+=value_NinthWeakConstraints*1000;
+        }
         ans+=Horistic();
         
         return ans;
+    }
+    public void print_WeakConstraints()
+    {
+        System.out.println("firstWeakConstraints :  " + !firstWeakConstraints());
+        System.out.println("TwoWeakConstraints :  " + !TwoWeakConstraints());
+        System.out.println("ThirdWeakConstraints :  " + !ThirdWeakConstraints());
+        System.out.println("FourthWeakConstraints :  " + !FourthWeakConstraints());
+        System.out.println("FifthWeakConstraints :  " + !FifthWeakConstraints());
+        System.out.println("sixthWeakConstraints :  " + !sixthWeakConstraints());
+        System.out.println("seventhWeakConstraints :  " + !seventhWeakConstraints());
+        System.out.println("EighthWeakConstraints :  " + !EighthWeakConstraints());
+        System.out.println("NinthWeakConstraints :  " + !NinthWeakConstraints());
+       
+        
     }
 }

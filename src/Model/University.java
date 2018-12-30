@@ -17,6 +17,16 @@ public class University {
     public static List<Specialization> Specializations;
     public static List<Teacher> teachers;
     public static List<Hall> halls;
+    public static int value_firstWeakConstraints = 10;
+    public static int value_TwoWeakConstraints = 5;
+    public static int value_ThirdWeakConstraints = 5;
+    public static int value_FourthWeakConstraints = 5;
+    public static int value_FifthWeakConstraints = 4;
+    public static int value_sixthWeakConstraints = 5;
+    public static int value_seventhWeakConstraints = 6;
+    public static int value_EighthWeakConstraints = 4;
+    public static int value_NinthWeakConstraints = 3;
+    
 
     public University() {
 
@@ -30,6 +40,8 @@ public class University {
         halls.add(new Hall("2", THEATER));
         halls.add(new Hall("3", THEATER));
         halls.add(new Hall("4", THEATER));
+        halls.add(new Hall("5", THEATER));
+        halls.add(new Hall("6", THEATER));
 
         halls.add(new Hall("2A", LAB));
         halls.add(new Hall("2B", LAB));
@@ -45,13 +57,13 @@ public class University {
         subjects.add(new Subject(SubjectName.ALGO, 1, 1, 0, true, true, true, 6));
         subjects.add(new Subject(SubjectName.COMPILER_AI, 1, 0, 1, true, false, false, 6));
         subjects.add(new Subject(SubjectName.ECONOMIE, 2, 0, 0, true, true, true, 4));
-        subjects.add(new Subject(SubjectName.NN_AI, 2, 1, 0, true, false, false, 7));
+//        subjects.add(new Subject(SubjectName.NN_AI, 2, 1, 0, true, false, false, 7));
         subjects.add(new Subject(SubjectName.OPERATING_SYSTEM, 2, 1, 0, true, true, true, 5));
         subjects.add(new Subject(SubjectName.SOFTWARE_AI_N, 2, 0, 1, true, false, true, 5));
         subjects.add(new Subject(SubjectName.COMPILER_SE, 1, 0, 1, false, true, false, 7));
         subjects.add(new Subject(SubjectName.SOFTWARE_SE, 2, 0, 1, false, true, false, 6));
-        subjects.add(new Subject(SubjectName.AppNetworks_N, 2, 1, 0, false, false, true, 5));
-        subjects.add(new Subject(SubjectName.DATABASE_SE, 2, 1, 0, false, true, false, 6));
+//        subjects.add(new Subject(SubjectName.AppNetworks_N, 2, 1, 0, false, false, true, 5));
+//        subjects.add(new Subject(SubjectName.DATABASE_SE, 2, 1, 0, false, true, false, 6));
 
 
         for (int i = 1; i <= 5; i++) {
@@ -90,9 +102,9 @@ public class University {
         subjectNames.add(SubjectName.ECONOMIE);
         subjectNames.add(SubjectName.COMPILER_AI);
         subjectNames.add(SubjectName.COMPILER_SE);
-        subjectNames.add(SubjectName.NN_AI);
-        subjectNames.add(SubjectName.AppNetworks_N);
-        subjectNames.add(SubjectName.DATABASE_SE);
+//        subjectNames.add(SubjectName.NN_AI);
+//        subjectNames.add(SubjectName.AppNetworks_N);
+//        subjectNames.add(SubjectName.DATABASE_SE);
 
         List<TypeLecture> typeLectures = new ArrayList<>();
         typeLectures.add(TypeLecture.Theoretical);
